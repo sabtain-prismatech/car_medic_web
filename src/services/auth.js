@@ -31,3 +31,19 @@ export const adminLoginApi = async (data) => {
   }
 };
 // Login-API-End
+
+// verify-token-by-admin-id-start
+export const verifyAdminApi = async (data, id) => {
+  //endPoint
+  const endPoint = `admin/verify/${id}`;
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On Verify Token API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// verify-token-by-admin-id-end

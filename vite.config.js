@@ -12,6 +12,7 @@ export default defineConfig({
       "@helper": path.resolve(__dirname, "src/helper/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
       "@axios": path.resolve(__dirname, "src/axios/"),
+      "@localStorage": path.resolve(__dirname, "src/localStorage/"),
       "@pages": path.resolve(__dirname, "src/pages/"),
       "@routes": path.resolve(__dirname, "src/routes/"),
       "@services": path.resolve(__dirname, "src/services/"),

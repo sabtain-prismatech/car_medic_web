@@ -13,10 +13,12 @@ import { useNavigate } from "react-router-dom";
 export default function CustomForm() {
   const navigate = useNavigate();
   const onSubmit = async (values) => {
-    console.log(values);
     await adminLoginApi(values).then((response) => {
       if (response?.data?.success) {
-        console.log(response?.data);
+        const adminInfo =response?.data?.data;
+        localStorage.setItem('TOKEN',adminInfo._id); 
+        console.log(response?.data?.data);
+        navigate("/dashboard");
       } else {
         console.log(response?.data?.message);
       }
