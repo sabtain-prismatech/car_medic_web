@@ -15,8 +15,8 @@ export default function CustomForm() {
   const onSubmit = async (values) => {
     await adminLoginApi(values).then((response) => {
       if (response?.data?.success) {
-        const adminInfo =response?.data?.data;
-        localStorage.setItem('TOKEN',adminInfo._id); 
+        const adminInfo = response?.data?.data;
+        localStorage.setItem("TOKEN", adminInfo?._id);
         console.log(response?.data?.data);
         navigate("/dashboard");
       } else {

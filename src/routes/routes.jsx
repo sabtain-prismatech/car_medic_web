@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 // ----3rd-party---- //
 import { Routes, Route } from "react-router-dom";
 // ----Component-for-scroll-to-top---- //
@@ -9,6 +9,7 @@ import { PulseLoader } from "react-spinners";
 import { PrivateLogin } from "./PrivateRoute";
 // Local-Storages
 import { tokenStorage } from "@localStorage";
+
 
 // ----pages---- //
 const Login = lazy(() => import("@pages/Login"));
@@ -28,6 +29,8 @@ const spinnerStyle = {
 };
 
 export default function routes() {
+console.log("tokenStorage",tokenStorage());
+
   return (
     <>
       <Suspense
@@ -38,8 +41,10 @@ export default function routes() {
         <Routes>
           <Route path={url + "login"} element={<Login />} />
           <Route path={url + "register"} element={<Register />} />
-          
-          <Route element={<PrivateLogin isAllowed={tokenStorage()} />}>
+
+          <Route
+            element={<PrivateLogin isAllowed={tokenStorage()} />}
+          >
             <Route path={url + "dashboard"} element={<Dashboard />} />
           </Route>
 

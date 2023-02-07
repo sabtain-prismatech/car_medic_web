@@ -10,11 +10,14 @@ import { loginData, loginSignal } from "@slice/Login/loginSlice";
 import TokenExpireModel from "@components/Model/TokenExpire";
 // services
 import { verifyAdminApi } from "@services/auth";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [tokenModel, setTokenModel] = useState(false);
   const dispatch = useDispatch();
   const { signal } = useSelector((state) => state.loginInfo);
+  const navigate = useNavigate();
+
 
   //fetching admin data through token start
   const fetchAndVerifyAdmin = async (token) => {
@@ -31,6 +34,8 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
+    console.log(token);
+    token === null &&  navigate('/login')
     if (signal) {
       dispatch(loginSignal(false));
       if (token) {

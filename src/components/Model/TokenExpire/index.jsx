@@ -13,6 +13,7 @@ function TokenExpireModel(props) {
   const goToLogin = () => {
     onHide();
     localStorage.removeItem("TOKEN");
+    navigate('/login');
   };
 
   return (
