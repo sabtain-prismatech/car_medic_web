@@ -18,7 +18,6 @@ function App() {
   const { signal } = useSelector((state) => state.loginInfo);
   const navigate = useNavigate();
 
-
   //fetching admin data through token start
   const fetchAndVerifyAdmin = async (token) => {
     await verifyAdminApi({}, token).then((response) => {
@@ -34,8 +33,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
-    console.log(token);
-    token === null &&  navigate('/login')
     if (signal) {
       dispatch(loginSignal(false));
       if (token) {

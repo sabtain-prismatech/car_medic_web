@@ -18,7 +18,7 @@ export default function CustomForm() {
         const adminInfo = response?.data?.data;
         localStorage.setItem("TOKEN", adminInfo?._id);
         console.log(response?.data?.data);
-        navigate("/dashboard");
+        navigate("/");
       } else {
         console.log(response?.data?.message);
       }

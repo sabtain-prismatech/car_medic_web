@@ -10,11 +10,11 @@ import { PrivateLogin } from "./PrivateRoute";
 // Local-Storages
 import { tokenStorage } from "@localStorage";
 
-
 // ----pages---- //
 const Login = lazy(() => import("@pages/Login"));
 const Register = lazy(() => import("@pages/Register"));
 const Dashboard = lazy(() => import("@pages/Dashboard"));
+const Customer = lazy(() => import("@pages/Customer"));
 
 //config
 import config from "@config/config.json";
@@ -29,7 +29,7 @@ const spinnerStyle = {
 };
 
 export default function routes() {
-console.log("tokenStorage",tokenStorage());
+  console.log("tokenStorage", tokenStorage());
 
   return (
     <>
@@ -42,10 +42,9 @@ console.log("tokenStorage",tokenStorage());
           <Route path={url + "login"} element={<Login />} />
           <Route path={url + "register"} element={<Register />} />
 
-          <Route
-            element={<PrivateLogin isAllowed={tokenStorage()} />}
-          >
-            <Route path={url + "dashboard"} element={<Dashboard />} />
+          <Route element={<PrivateLogin isAllowed={tokenStorage()} />}>
+            <Route path={url} element={<Dashboard />} />
+            <Route path={url + "customer"} element={<Customer />} />
           </Route>
 
           <Route path={url + "*"} element={<div>Page not Found</div>} />
