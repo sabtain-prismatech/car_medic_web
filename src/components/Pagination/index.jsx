@@ -6,7 +6,7 @@ import Icons from "@helper/icons";
 
 const Pagination = ({ pageCount, selectedpage }) => {
   const handlePageClick = (data) => {
-    selectedpage(data.selected);
+    selectedpage(data.selected + 1);
   };
   return (
     <>
@@ -14,7 +14,7 @@ const Pagination = ({ pageCount, selectedpage }) => {
         previousLabel={<Icons.MdIcons.MdArrowBackIosNew />}
         nextLabel={<Icons.MdIcons.MdArrowForwardIos />}
         breakLabel={"..."}
-        pageCount={pageCount}
+        pageCount={Number(pageCount)}
         marginPagesDisplayed={"2"}
         onPageChange={handlePageClick}
         containerClassName={"pagination"}

@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function PageSelection(props) {
+export default function PageSelection({ dataPerPage }) {
   return (
     <>
-      <select name="" id="">
+      <select onChange={(e) => dataPerPage(e.target.value)}>
+        <option value="1">1</option>
+        <option value="2">2</option>
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="50">50</option>

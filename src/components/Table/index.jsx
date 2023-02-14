@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Table({ theading, children }) {
-  console.log(theading);
   return (
     <>
       <table>
