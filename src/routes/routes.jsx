@@ -15,6 +15,7 @@ const Login = lazy(() => import("@pages/Login"));
 const Register = lazy(() => import("@pages/Register"));
 const Dashboard = lazy(() => import("@pages/Dashboard"));
 const Customer = lazy(() => import("@pages/Customer"));
+const Vehicle = lazy(() => import("@pages/Vehicle"));
 
 //config
 import config from "@config/config.json";
@@ -45,6 +46,7 @@ export default function routes() {
           <Route element={<PrivateLogin isAllowed={tokenStorage()} />}>
             <Route path={url} element={<Dashboard />} />
             <Route path={url + "customer"} element={<Customer />} />
+            <Route path={url + "vehicle"} element={<Vehicle />} />
           </Route>
 
           <Route path={url + "*"} element={<div>Page not Found</div>} />

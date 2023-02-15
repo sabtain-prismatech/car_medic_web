@@ -17,6 +17,9 @@ export default function SideNav() {
         <Link to="/customer" className="me-5">
           Customer
         </Link>
+        <Link to="/vehicle" className="me-5">
+          Vehicle
+        </Link>
         <button onClick={logout}>Logout</button>
       </div>
     </>
