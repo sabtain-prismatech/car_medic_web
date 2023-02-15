@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // Components
 import CreateCustomerModel from "@components/Model/CreateCustomer";
-import CreateVehicleModel from "@components/Model/CreateVehicle";
+import CustomerFilterModel from "@components/Model/CustomerFilter";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
 import ActiveUser from "./ActiveUser";
@@ -14,25 +14,28 @@ import { getAllCustomersApi } from "@services/customer";
 
 export default function Content() {
   const [addModel, setAddModel] = useState(false);
-  const [addVehicleModel, setAddVehicleModel] = useState(false);
+  const [filterModel, setFilterModel] = useState(false);
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
   const [tabsKey, setTabsKey] = useState("active");
 
   const [customerInfo, setCustomerInfo] = useState([]);
+  const [filter, setFilter] = useState({
+    name: "",
+    vehicleNo: "",
+    vehicleBrand: "",
+    vehicleModel: "",
+    phone: "",
+  });
+
+  console.log("filter", filter);
 
   const getAllCustomersList = async () => {
     const payload = {
       pageNo: selectedpage,
       perPage: Number(dataPerPage),
       status: tabsKey,
-      filter: {
-        name: "",
-        vehicleNo: "",
-        vehicleBrand: "",
-        vehicleModel: "",
-        phone: "",
-      },
+      filter,
     };
     await getAllCustomersApi(payload).then((response) => {
       if (response?.data?.success) {
@@ -46,19 +49,28 @@ export default function Content() {
   useEffect(() => {
     console.log("API IS WORKING");
     getAllCustomersList();
-  }, [tabsKey, dataPerPage,selectedpage]);
+  }, [tabsKey, dataPerPage, selectedpage, filter]);
 
   return (
     <>
       <div className="mt-5">
-        <CreateCustomerModel
-          show={addModel}
-          onHide={() => setAddModel(false)}
-        />
-        <CreateVehicleModel
-          show={addVehicleModel}
-          onHide={() => setAddVehicleModel(false)}
-        />
+        {addModel ? (
+          <CreateCustomerModel
+            show={addModel}
+            onHide={() => setAddModel(false)}
+          />
+        ) : (
+          ""
+        )}
+        {filterModel ? (
+          <CustomerFilterModel
+            show={filterModel}
+            onHide={() => setFilterModel(false)}
+            filter={(value) => setFilter(value)}
+          />
+        ) : (
+          ""
+        )}
         <div className="d-flex justify-content-center mb-3">
           <button
             type="button"
@@ -67,8 +79,27 @@ export default function Content() {
           >
             Add Customer
           </button>
-          <button type="button" className="btn btn-danger ms-4">
+          <button
+            type="button"
+            className="btn btn-danger ms-4"
+            onClick={() => setFilterModel(true)}
+          >
             Filter
+          </button>
+          <button
+            type="button"
+            className="btn btn-success ms-4"
+            onClick={() =>
+              setFilter({
+                name: "",
+                vehicleNo: "",
+                vehicleBrand: "",
+                vehicleModel: "",
+                phone: "",
+              })
+            }
+          >
+            Reset
           </button>
         </div>
         <Tabs

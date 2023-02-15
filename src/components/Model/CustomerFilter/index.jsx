@@ -7,29 +7,15 @@ import Icons from "@helper/icons";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 // schema
 import { initialValues, validationSchema } from "./schema";
-// services
-import { createVehicleApi } from "@services/vehicle";
 
-function CreateVehicleModel(props) {
-  const { onHide, customerInfo } = props;
+function CustomerFilterModel(props) {
+  const { onHide, filter } = props;
 
   // onSubmit
   const onSubmit = async (values) => {
     console.log(values);
-    values = { ...values, customerId: customerInfo._id };
-    await createVehicleApi(values).then((response) => {
-      if (response?.data?.success) {
-        document.getElementById("vehicleResult").innerText =
-          response?.data?.message;
-        setTimeout(() => {
-          onHide();
-        }, 3000);
-        console.log(response.data);
-      } else {
-        document.getElementById("vehicleResult").innerText =
-          response?.data?.message;
-      }
-    });
+    filter(values);
+    onHide();
   };
 
   return (
@@ -56,69 +42,60 @@ function CreateVehicleModel(props) {
             >
               {({ values }) => (
                 <Form>
-                  <div className="mt-3">
-                    <label htmlFor="">Customer Name</label>
-                    <br />
-                    <input type="text" defaultValue={customerInfo?.name} />
+                  <div>
+                    <Field
+                      type="text"
+                      name="name"
+                      className="mt-3"
+                      placeholder="Enter name"
+                    />
                   </div>
-                  <div className="mt-3">
-                    <label htmlFor="">Vehicle No</label>
-                    <br />
+                  <div>
                     <Field
                       type="text"
                       name="vehicleNo"
                       className="mt-3"
                       placeholder="Enter vehicle no"
                     />
-                    <ErrorMessage
-                      name="vehicleNo"
-                      component="h6"
-                      className="error-msg mt-2"
-                    />
                   </div>
-                  <div className="mt-3">
-                    <label htmlFor="">Vehicle Brand</label>
-                    <br />
+
+                  <div>
                     <Field
                       type="text"
                       name="vehicleBrand"
                       className="mt-3"
                       placeholder="Enter vehicle brand"
                     />
-                    <ErrorMessage
-                      name="vehicleBrand"
-                      component="h6"
-                      className="error-msg mt-2"
-                    />
                   </div>
-                  <div className="mt-3">
-                    <label htmlFor="">Vehicle Model</label>
-                    <br />
+                  <div>
                     <Field
                       type="text"
                       name="vehicleModel"
                       className="mt-3"
                       placeholder="Enter vehicle model"
                     />
-                    <ErrorMessage
-                      name="vehicleModel"
-                      component="h6"
-                      className="error-msg mt-2"
+                  </div>
+
+                  <div>
+                    <Field
+                      type="text"
+                      className="mt-3"
+                      name="phone"
+                      placeholder="Enter phone"
                     />
                   </div>
 
                   <div className="text-center mt-5">
-                    <button type="submit">Create</button>
+                    <button type="submit">Filter</button>
                   </div>
                 </Form>
               )}
             </Formik>
           </div>
-          <div id="vehicleResult"></div>
         </div>
       </Modal>
     </>
   );
 }
 
-export default CreateVehicleModel;
+export default CustomerFilterModel;

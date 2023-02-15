@@ -47,66 +47,90 @@ function CreateCustomerModel(props) {
               onSubmit={onSubmit}
               validationSchema={validationSchema}
             >
-              <Form>
-                <Field
-                  type="text"
-                  name="name"
-                  className="mt-3"
-                  placeholder="Enter name"
-                />
-                <ErrorMessage
-                  name="name"
-                  component="h6"
-                  className="error-msg mt-2"
-                />
-                <Field
-                  type="text"
-                  name="vehicleNo"
-                  className="mt-3"
-                  placeholder="Enter vehicle no"
-                />
-                <Field
-                  type="text"
-                  name="vehicleBrand"
-                  className="mt-3"
-                  placeholder="Enter vehicle brand"
-                />
-                <Field
-                  type="text"
-                  name="vehicleModel"
-                  className="mt-3"
-                  placeholder="Enter vehicle model"
-                />
-                <Field
-                  type="text"
-                  name="location"
-                  className="mt-3"
-                  placeholder="Enter location"
-                />
-                <ErrorMessage
-                  name="location"
-                  component="h6"
-                  className="error-msg mt-2"
-                />
-                <Field
-                  type="text"
-                  className="mt-3"
-                  name="phone"
-                  placeholder="Enter phone"
-                />
-                <ErrorMessage
-                  name="phone"
-                  component="h6"
-                  className="error-msg mt-2"
-                />
-                <label htmlFor="" className="mt-3">
-                  Do you have whatsapp Number?
-                  <Field type="checkbox" name="whatsapp" />
-                </label>
-                <div className="text-center mt-5">
-                  <button type="submit">Create</button>
-                </div>
-              </Form>
+              {({ values }) => (
+                <Form>
+                  <div>
+                    <Field
+                      type="text"
+                      name="name"
+                      className="mt-3"
+                      placeholder="Enter name"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="h6"
+                      className="error-msg mt-2"
+                    />
+                  </div>
+                  <div>
+                    <Field
+                      type="text"
+                      name="vehicleNo"
+                      className="mt-3"
+                      placeholder="Enter vehicle no"
+                    />
+                  </div>
+
+                  {values.vehicleNo !== "" ? (
+                    <div>
+                      <Field
+                        type="text"
+                        name="vehicleBrand"
+                        className="mt-3"
+                        placeholder="Enter vehicle brand"
+                      />
+                      <ErrorMessage
+                        name="vehicleBrand"
+                        component="h6"
+                        className="error-msg mt-2"
+                      />
+                      <Field
+                        type="text"
+                        name="vehicleModel"
+                        className="mt-3"
+                        placeholder="Enter vehicle model"
+                      />
+                      <ErrorMessage
+                        name="vehicleModel"
+                        component="h6"
+                        className="error-msg mt-2"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  <Field
+                    type="text"
+                    name="location"
+                    className="mt-3"
+                    placeholder="Enter location"
+                  />
+                  <ErrorMessage
+                    name="location"
+                    component="h6"
+                    className="error-msg mt-2"
+                  />
+                  <Field
+                    type="text"
+                    className="mt-3"
+                    name="phone"
+                    placeholder="Enter phone"
+                  />
+                  <ErrorMessage
+                    name="phone"
+                    component="h6"
+                    className="error-msg mt-2"
+                  />
+                  <label htmlFor="" className="mt-3">
+                    Do you have whatsapp Number?
+                    <Field type="checkbox" name="whatsapp" />
+                  </label>
+                  <div className="text-center mt-5">
+                    <button type="submit">Create</button>
+                  </div>
+                </Form>
+              )}
             </Formik>
           </div>
         </div>

@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // Components
 import Table from "@components/Table";
-import Pagination from "@components/Pagination";
-import PageSelection from "@components/PageSelection";
 // config
 import staticData from "@config/config.json";
 
@@ -20,12 +18,9 @@ export default function InActiveUser({ customerList }) {
               ))}
             </td>
             <td className="border">
-              <button>Create Order</button>
+              <button disabled>Create Order</button>
             </td>
-            <td className="border">
-              {val?.vehicles?.length} ,{" "}
-              <button onClick={() => setAddVehicleModel(true)}>ADD</button>
-            </td>
+            <td className="border">{val?.vehicles?.length}</td>
             <td className="border">
               {val?.vehicles?.map((vehicle, index) => (
                 <div key={index}>{vehicle?.vehicleBrand}</div>
