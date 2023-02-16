@@ -6,14 +6,38 @@ import CreateVehicleModel from "@components/Model/CreateVehicle";
 import staticData from "@config/config.json";
 // helpers
 import Icons from "@helper/icons";
+// services
+import { updateCustomerStatusApi } from "@services/customer";
 
-export default function ActiveUser({ customerList }) {
+export default function ActiveUser({ customerList, updateStatus }) {
   const [addVehicleModel, setAddVehicleModel] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState({});
+  const [statusLoader, setStatusLoader] = useState(false);
 
   const modelHandler = (value) => {
     setSelectedCustomer(value);
     setAddVehicleModel(true);
+  };
+
+  // status-handler-function
+  const statusHandlerFun = async (e, customer) => {
+    setStatusLoader(true);
+    const status = e.target.value;
+    const id = customer._id;
+    // payload
+    const payload = {
+      status,
+    };
+
+    await updateCustomerStatusApi(payload, id).then((response) => {
+      if (response?.data?.success) {
+        updateStatus(true);
+        console.log(response);
+      } else {
+        console.log(response?.data?.message);
+      }
+    });
+    setStatusLoader(false);
   };
 
   return (
@@ -62,9 +86,23 @@ export default function ActiveUser({ customerList }) {
               )}
             </td>
             <td className="border">icon</td>
+            <td>
+              {statusLoader ? (
+                "...loading"
+              ) : (
+                <select
+                  name=""
+                  id=""
+                  value={val?.status}
+                  onChange={(e) => statusHandlerFun(e, val)}
+                >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              )}
+            </td>
             <td className="border">
               <button>Edit</button>
-              <button>Delete</button>
             </td>
           </tr>
         ))}

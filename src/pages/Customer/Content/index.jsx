@@ -18,6 +18,7 @@ export default function Content() {
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
   const [tabsKey, setTabsKey] = useState("active");
+  const [updateStatus, setUpdateStatus] = useState(false);
 
   const [customerInfo, setCustomerInfo] = useState([]);
   const [filter, setFilter] = useState({
@@ -47,9 +48,16 @@ export default function Content() {
   };
 
   useEffect(() => {
-    console.log("API IS WORKING");
     getAllCustomersList();
   }, [tabsKey, dataPerPage, selectedpage, filter]);
+
+  // if-status is updated
+  useEffect(() => {
+    if (updateStatus) {
+      setUpdateStatus(false);
+      getAllCustomersList();
+    }
+  }, [updateStatus]);
 
   return (
     <>
@@ -114,7 +122,10 @@ export default function Content() {
           >
             <div>
               {tabsKey === "active" ? (
-                <ActiveUser customerList={customerInfo?.customers} />
+                <ActiveUser
+                  customerList={customerInfo?.customers}
+                  updateStatus={(value) => setUpdateStatus(value)}
+                />
               ) : (
                 ""
               )}
@@ -125,7 +136,10 @@ export default function Content() {
             title={`Inactive User (${customerInfo?.inactiveCustomer})`}
           >
             <div>
-              <InActiveUser customerList={customerInfo?.customers} />
+              <InActiveUser
+                customerList={customerInfo?.customers}
+                updateStatus={(value) => setUpdateStatus(value)}
+              />
             </div>
           </Tab>
         </Tabs>

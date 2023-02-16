@@ -12,6 +12,7 @@
     "Location",
     "Phone",
     "Details",
+    "Status",
     "Action"
   ],
   "vehiclesTableHeadings": [
