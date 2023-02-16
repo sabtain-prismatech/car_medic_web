@@ -15,3 +15,19 @@ export const createVehicleApi = async (data) => {
   }
 };
 // Create-Vehicle-API-End
+
+// vehicle-list-start
+export const vehicleListApi = async (data) => {
+  //endPoint
+  const endPoint = "/vehicle/list";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On list Vehicle API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// vehicle-list-end

@@ -1,5 +1,24 @@
 {
   "apiUrl": "http://localhost:8000",
   "routeUrl": "/",
-  "customerTableHeadings":["#","Name","Vehicle No","Order","No Of Vehicle","Vehicle Brand","Created At","Location","Phone","Details","Action"]
+  "customerTableHeadings": [
+    "#",
+    "Name",
+    "Vehicle No",
+    "Order",
+    "No Of Vehicle",
+    "Vehicle Brand",
+    "Created At",
+    "Location",
+    "Phone",
+    "Details",
+    "Action"
+  ],
+  "vehiclesTableHeadings": [
+    "#",
+    "Vehicle No",
+    "Vehicle Brand",
+    "Vehicle Model",
+    "Action"
+  ]
 }
