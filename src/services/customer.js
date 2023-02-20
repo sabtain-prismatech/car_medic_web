@@ -47,3 +47,19 @@ export const updateCustomerStatusApi = async (data, id) => {
   }
 };
 // update-status-by-id-end
+
+// update-customer-start
+export const updateCustomerApi = async (data, id) => {
+  //endPoint
+  const endPoint = `/customer/update/${id}`;
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On Update Customer API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// update-customer-end

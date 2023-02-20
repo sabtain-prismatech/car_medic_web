@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // Components
 import Table from "@components/Table";
 import CreateVehicleModel from "@components/Model/CreateVehicle";
+import EditCustomerModel from "@components/Model/EditCustomer";
 // config
 import staticData from "@config/config.json";
 // helpers
@@ -11,12 +12,19 @@ import { updateCustomerStatusApi } from "@services/customer";
 
 export default function ActiveUser({ customerList, updateStatus }) {
   const [addVehicleModel, setAddVehicleModel] = useState(false);
+  const [editCustomerPop, setEditCustomerPop] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [statusLoader, setStatusLoader] = useState(false);
 
   const modelHandler = (value) => {
     setSelectedCustomer(value);
     setAddVehicleModel(true);
+  };
+
+  // edit-customer-model-handler
+  const editCustomerModelHandler = (value) => {
+    setSelectedCustomer(value);
+    setEditCustomerPop(true);
   };
 
   // status-handler-function
@@ -51,6 +59,16 @@ export default function ActiveUser({ customerList, updateStatus }) {
       ) : (
         ""
       )}
+      {editCustomerPop ? (
+        <EditCustomerModel
+          customerInfo={selectedCustomer}
+          show={editCustomerPop}
+          onHide={() => setEditCustomerPop(false)}
+        />
+      ) : (
+        ""
+      )}
+
       <Table theading={staticData.customerTableHeadings}>
         {customerList?.map((val, index) => (
           <tr key={index}>
@@ -102,7 +120,9 @@ export default function ActiveUser({ customerList, updateStatus }) {
               )}
             </td>
             <td className="border">
-              <button>Edit</button>
+              <button onClick={() => editCustomerModelHandler(val)}>
+                Edit
+              </button>
             </td>
           </tr>
         ))}
