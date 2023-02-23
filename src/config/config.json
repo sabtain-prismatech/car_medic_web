@@ -15,11 +15,5 @@
     "Status",
     "Action"
   ],
-  "vehiclesTableHeadings": [
-    "#",
-    "Vehicle No",
-    "Vehicle Brand",
-    "Vehicle Model",
-    "Action"
-  ]
+  "vehiclesTableHeadings": ["#", "Vehicle No", "Vehicle Brand", "Vehicle Model"]
 }

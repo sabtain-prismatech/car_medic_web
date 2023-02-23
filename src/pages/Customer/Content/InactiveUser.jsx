@@ -6,7 +6,7 @@ import staticData from "@config/config.json";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
 
-export default function InActiveUser({ customerList, updateStatus }) {
+export default function InActiveUser({ customerList, updateCustomerList }) {
   const [statusLoader, setStatusLoader] = useState(false);
 
   // status-handler-function
@@ -21,7 +21,7 @@ export default function InActiveUser({ customerList, updateStatus }) {
 
     await updateCustomerStatusApi(payload, id).then((response) => {
       if (response?.data?.success) {
-        updateStatus(true);
+        updateCustomerList(true);
         console.log(response);
       } else {
         console.log(response?.data?.message);

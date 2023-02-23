@@ -18,7 +18,7 @@ export default function Content() {
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
   const [tabsKey, setTabsKey] = useState("active");
-  const [updateStatus, setUpdateStatus] = useState(false);
+  const [updateCustomerList, setUpdateCustomerList] = useState(false);
 
   const [customerInfo, setCustomerInfo] = useState([]);
   const [filter, setFilter] = useState({
@@ -53,11 +53,11 @@ export default function Content() {
 
   // if-status is updated
   useEffect(() => {
-    if (updateStatus) {
-      setUpdateStatus(false);
+    if (updateCustomerList) {
+      setUpdateCustomerList(false);
       getAllCustomersList();
     }
-  }, [updateStatus]);
+  }, [updateCustomerList]);
 
   return (
     <>
@@ -66,6 +66,7 @@ export default function Content() {
           <CreateCustomerModel
             show={addModel}
             onHide={() => setAddModel(false)}
+            updateCustomerList={(value) => setUpdateCustomerList(value)}
           />
         ) : (
           ""
@@ -124,7 +125,7 @@ export default function Content() {
               {tabsKey === "active" ? (
                 <ActiveUser
                   customerList={customerInfo?.customers}
-                  updateStatus={(value) => setUpdateStatus(value)}
+                  updateCustomerList={(value) => setUpdateCustomerList(value)}
                 />
               ) : (
                 ""
@@ -138,7 +139,7 @@ export default function Content() {
             <div>
               <InActiveUser
                 customerList={customerInfo?.customers}
-                updateStatus={(value) => setUpdateStatus(value)}
+                updateCustomerList={(value) => setUpdateCustomerList(value)}
               />
             </div>
           </Tab>

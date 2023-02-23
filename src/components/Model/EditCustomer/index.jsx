@@ -11,7 +11,7 @@ import { initialValues, validationSchema } from "./schema";
 import { updateCustomerApi } from "@services/customer";
 
 function EditCustomerModel(props) {
-  const { onHide, customerInfo } = props;
+  const { onHide, customerInfo, updateCustomerList } = props;
   console.log(customerInfo);
 
   // onSubmit
@@ -20,6 +20,8 @@ function EditCustomerModel(props) {
     await updateCustomerApi(values, customerInfo._id).then((response) => {
       if (response?.data?.success) {
         console.log(response.data);
+        updateCustomerList(true);
+        onHide();
       } else {
         console.log(response?.data?.message);
       }

@@ -11,7 +11,7 @@ import { initialValues, validationSchema } from "./schema";
 import { CreateCustomersApi } from "@services/customer";
 
 function CreateCustomerModel(props) {
-  const { onHide } = props;
+  const { onHide, updateCustomerList } = props;
 
   // onSubmit
   const onSubmit = async (values) => {
@@ -19,6 +19,8 @@ function CreateCustomerModel(props) {
     await CreateCustomersApi(values).then((response) => {
       if (response?.data?.success) {
         console.log(response.data);
+        updateCustomerList(true);
+        onHide();
       } else {
         console.log(response?.data?.message);
       }

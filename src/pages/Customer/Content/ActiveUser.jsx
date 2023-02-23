@@ -10,7 +10,7 @@ import Icons from "@helper/icons";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
 
-export default function ActiveUser({ customerList, updateStatus }) {
+export default function ActiveUser({ customerList, updateCustomerList }) {
   const [addVehicleModel, setAddVehicleModel] = useState(false);
   const [editCustomerPop, setEditCustomerPop] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState({});
@@ -39,7 +39,7 @@ export default function ActiveUser({ customerList, updateStatus }) {
 
     await updateCustomerStatusApi(payload, id).then((response) => {
       if (response?.data?.success) {
-        updateStatus(true);
+        updateCustomerList(true);
         console.log(response);
       } else {
         console.log(response?.data?.message);
@@ -62,6 +62,7 @@ export default function ActiveUser({ customerList, updateStatus }) {
       {editCustomerPop ? (
         <EditCustomerModel
           customerInfo={selectedCustomer}
+          updateCustomerList={(value)=>updateCustomerList(value)}
           show={editCustomerPop}
           onHide={() => setEditCustomerPop(false)}
         />

@@ -11,7 +11,7 @@ import { initialValues, validationSchema } from "./schema";
 import { createVehicleApi } from "@services/vehicle";
 
 function CreateVehicleModel(props) {
-  const { onHide, customerInfo } = props;
+  const { onHide, customerInfo, updateCustomerList } = props;
 
   // onSubmit
   const onSubmit = async (values) => {
@@ -22,6 +22,7 @@ function CreateVehicleModel(props) {
         document.getElementById("vehicleResult").innerText =
           response?.data?.message;
         setTimeout(() => {
+          updateCustomerList(true);
           onHide();
         }, 3000);
         console.log(response.data);
