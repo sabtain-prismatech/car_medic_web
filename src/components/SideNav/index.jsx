@@ -20,6 +20,12 @@ export default function SideNav() {
         <Link to="/vehicle" className="me-5">
           Vehicle
         </Link>
+        <Link to="/expense" className="me-5">
+          Expense
+        </Link>
+        <Link to="/services" className="me-5">
+          Services
+        </Link>
         <button onClick={logout}>Logout</button>
       </div>
     </>
