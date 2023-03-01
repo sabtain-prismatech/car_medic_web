@@ -1,15 +1,15 @@
 import React from "react";
 // Components
 import SideNav from "@components/SideNav";
-import Content from "./Content/Content";
+import Main from "./Component/Main";
 
-export default function Vehicle() {
+export default function Expense() {
   return (
     <>
       <div className="p-5">
-        <h1>Vehicle</h1>
+        <h1>Expense</h1>
         <SideNav />
-        <Content />
+        <Main />
       </div>
     </>
   );

@@ -15,5 +15,6 @@
     "Status",
     "Action"
   ],
-  "vehiclesTableHeadings": ["#", "Vehicle No", "Vehicle Brand", "Vehicle Model"]
+  "vehiclesTableHeadings": ["#", "Vehicle No", "Vehicle Brand", "Vehicle Model"],
+  "expenseTableHeadings": ["#", "Title", "Amount", "Discription","Action"]
 }
