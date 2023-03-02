@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
+import CreateExpenseModel from "@components/Model/CreateExpense";
 // config
 import staticData from "@config/config.json";
 // services
@@ -10,6 +11,8 @@ import { expenseListApi } from "@services/expense";
 
 export default function Main() {
   const [expenseList, setExpenseList] = useState([]);
+  const [createModel, setCreateModel] = useState(false);
+  const [updateExpenseList, setUpdateExpenseList] = useState(false);
   console.log(expenseList);
   const [search, setSearch] = useState("");
   const [selectedpage, setSelectedpage] = useState(0);
@@ -43,8 +46,24 @@ export default function Main() {
     }
   }, [search, dataPerPage, selectedpage]);
 
+  useEffect(() => {
+    if (updateExpenseList) {
+      setUpdateExpenseList(false);
+      getExpenseList();
+    }
+  }, [updateExpenseList]);
+
   return (
     <>
+      {createModel ? (
+        <CreateExpenseModel
+          show={createModel}
+          onHide={() => setCreateModel(false)}
+          updateExpenseList={(value) => setUpdateExpenseList(value)}
+        />
+      ) : (
+        ""
+      )}
       <div className="mt-5">
         <div className="mb-5">
           <input
@@ -53,6 +72,13 @@ export default function Main() {
             onChange={(e) => setSearch(e.target.value)}
             value={search}
           />
+          <button
+            type="button"
+            className="ms-3"
+            onClick={() => setCreateModel(true)}
+          >
+            Add Expense
+          </button>
         </div>
         <Table theading={staticData.expenseTableHeadings}>
           {expenseList?.expenses?.map((val, index) => (
@@ -61,6 +87,7 @@ export default function Main() {
               <td className="border">{val?.title || ""}</td>
               <td className="border">{val?.amount || ""}</td>
               <td className="border">{val?.description || "N/A"}</td>
+              <td className="border">{val?.createdAt}</td>
             </tr>
           ))}
         </Table>
