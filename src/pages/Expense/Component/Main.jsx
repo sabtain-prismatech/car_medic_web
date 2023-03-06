@@ -4,6 +4,7 @@ import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
 import CreateExpenseModel from "@components/Model/CreateExpense";
+import DateFilter from "@components/DateFilter";
 // config
 import staticData from "@config/config.json";
 // services
@@ -22,6 +23,8 @@ export default function Main() {
   const getExpenseList = async () => {
     const params = {
       title: search,
+      fromDate: "",
+      toDate: "",
       pageNo: selectedpage,
       perPage: Number(dataPerPage),
     };
@@ -79,6 +82,10 @@ export default function Main() {
           >
             Add Expense
           </button>
+
+          <div className="mt-2">
+            <DateFilter  />
+          </div>
         </div>
         <Table theading={staticData.expenseTableHeadings}>
           {expenseList?.expenses?.map((val, index) => (
