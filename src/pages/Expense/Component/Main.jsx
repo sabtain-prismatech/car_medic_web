@@ -9,6 +9,8 @@ import DateFilter from "@components/DateFilter";
 import staticData from "@config/config.json";
 // services
 import { expenseListApi } from "@services/expense";
+// date-formatter
+import dateFormat from "dateformat";
 
 export default function Main() {
   const [expenseList, setExpenseList] = useState([]);
@@ -16,6 +18,10 @@ export default function Main() {
   const [updateExpenseList, setUpdateExpenseList] = useState(false);
   console.log(expenseList);
   const [search, setSearch] = useState("");
+  const [dateFilter, setDateFilter] = useState({
+    fromDate: dateFormat(new Date(), "yyyy-mm-dd"),
+    toDate: dateFormat(new Date(), "yyyy-mm-dd"),
+  });
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
 
@@ -23,8 +29,8 @@ export default function Main() {
   const getExpenseList = async () => {
     const params = {
       title: search,
-      fromDate: "",
-      toDate: "",
+      fromDate: dateFilter.fromDate,
+      toDate: dateFilter.toDate,
       pageNo: selectedpage,
       perPage: Number(dataPerPage),
     };
@@ -84,7 +90,11 @@ export default function Main() {
           </button>
 
           <div className="mt-2">
-            <DateFilter  />
+            <DateFilter
+              dateFilter={dateFilter}
+              setDateFilter={(value) => setDateFilter(value)}
+              clickEvent={getExpenseList}
+            />
           </div>
         </div>
         <Table theading={staticData.expenseTableHeadings}>
