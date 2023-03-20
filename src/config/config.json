@@ -28,5 +28,16 @@
     "Discription",
     "Date & Time",
     "Action"
+  ],
+  "productStockTableHeadings": [
+    "#",
+    "Product Name",
+    "Description",
+    "Quantity",
+    "Price",
+    "Sale Price",
+    "Sale",
+    "Date",
+    "Action"
   ]
 }
