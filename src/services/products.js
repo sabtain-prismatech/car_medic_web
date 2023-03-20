@@ -31,3 +31,51 @@ export const getSalesListApi = async (data) => {
   }
 };
 // get-sales-list-API-End
+
+// get-sales-history-list-start
+export const getSalesHistoryListApi = async (data) => {
+  //endPoint
+  const endPoint = "/product/sale/history/list";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On get-sales-history-list API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// get-sales-history-list-end
+
+// Create-Product-start
+export const createProductApi = async (data) => {
+  //endPoint
+  const endPoint = "/product/buy/create";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On create product API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// Create-Product-end
+
+// Create-Sale-Product-start
+export const createSaleProductApi = async (data) => {
+  //endPoint
+  const endPoint = "/product/sale/create";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On create sale product API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// Create-Sale-Product-end

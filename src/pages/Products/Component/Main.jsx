@@ -5,6 +5,7 @@ import Tab from "react-bootstrap/Tab";
 // Components
 import Stock from "./Stock";
 import Sale from "./Sale";
+import History from "./History";
 
 export default function Main() {
   const [tabsKey, setTabsKey] = useState("stock");
@@ -31,7 +32,7 @@ export default function Main() {
           <div>{tabsKey === "sale" ? <Sale /> : ""}</div>
         </Tab>
         <Tab eventKey="saleHistory" title={`Sale History ()`}>
-          <div>{tabsKey === "saleHistory" ? "" : ""}</div>
+          <div>{tabsKey === "saleHistory" ? <History /> : ""}</div>
         </Tab>
       </Tabs>
     </>

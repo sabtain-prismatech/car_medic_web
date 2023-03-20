@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
+// Model
+import CreateProductModel from "@components/Model/CreateProduct";
+import CreateSalesModel from "@components/Model/CreateSale";
 // config
 import staticData from "@config/config.json";
 // services
@@ -10,10 +13,13 @@ import { getStockListApi } from "@services/products";
 
 export default function Stock({ stock }) {
   const [productList, setProductList] = useState([]);
-
+  const [createModel, setCreateModel] = useState(false);
+  const [saleModel, setSaleModel] = useState(false);
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [updateProductList, setUpdateProductList] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   // get-all-Product-Stock-API-start
   const getAllProductList = async () => {
@@ -46,8 +52,45 @@ export default function Stock({ stock }) {
     }
   }, [search, dataPerPage, selectedpage]);
 
+  // if-update-product-list-trigger-then-update-the-list
+  useEffect(() => {
+    if (updateProductList) {
+      setUpdateProductList(false);
+      getAllProductList();
+    }
+  }, [updateProductList]);
+
+  // Handle-Sale-Products
+  const handleSale = (prod) => {
+    setSelectedProduct(prod);
+    setSaleModel(true);
+  };
+
   return (
     <>
+      {/* create-model-start */}
+      {createModel ? (
+        <CreateProductModel
+          show={createModel}
+          onHide={() => setCreateModel(false)}
+          updateProductList={(value) => setUpdateProductList(value)}
+        />
+      ) : (
+        ""
+      )}
+      {/* create-model-end */}
+      {/* sale-model-start */}
+      {saleModel ? (
+        <CreateSalesModel
+          show={saleModel}
+          onHide={() => setSaleModel(false)}
+          updateProductList={(value) => setUpdateProductList(value)}
+          product={selectedProduct}
+        />
+      ) : (
+        ""
+      )}
+      {/* sale-model-end */}
       <div className="my-4">
         <input
           type="text"
@@ -56,7 +99,9 @@ export default function Stock({ stock }) {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
-        <button>Add New Product</button>
+        <button type="button" onClick={() => setCreateModel(true)}>
+          Add New Product
+        </button>
       </div>
       <div>Total Stock Amount : {productList?.stockAmount}</div>
       <small className="mb-2 d-block">
@@ -75,7 +120,13 @@ export default function Stock({ stock }) {
             <td className="border">{val?.price || ""}</td>
             <td className="border">{val?.salePrice || ""}</td>
             <td className="border">
-              <button>Sale Now</button>
+              <button
+                type="button"
+                disabled={val?.quantity.$numberDecimal > 0 ? false : true}
+                onClick={() => handleSale(val)}
+              >
+                Sale Now
+              </button>
             </td>
             <td className="border">{val?.createdAt || ""}</td>
           </tr>

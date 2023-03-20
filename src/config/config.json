@@ -39,5 +39,30 @@
     "Sale",
     "Date",
     "Action"
+  ],
+  "productSalesTableHeadings": [
+    "#",
+    "Product Name",
+    "Description",
+    "Quantity",
+    "Buy Price",
+    "Sale Price",
+    "Discount",
+    "Profit",
+    "Avg Selling Price",
+    "Last Update",
+    "Action"
+  ],
+  "productSalesHistoryTableHeadings": [
+    "#",
+    "Customer Name",
+    "Product Name",
+    "Description",
+    "Quantity",
+    "Sale Price",
+    "Discount",
+    "Total",
+    "Date",
+    "Action"
   ]
 }
