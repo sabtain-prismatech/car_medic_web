@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
+// Model
+import ReturnProductModel from "@components/Model/ReturnProduct";
 // config
 import staticData from "@config/config.json";
 // services
@@ -10,7 +12,7 @@ import { getSalesHistoryListApi } from "@services/products";
 
 export default function History() {
   const [productList, setProductList] = useState([]);
-
+  const [returnModel, setReturnModel] = useState(false);
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -51,8 +53,19 @@ export default function History() {
     }
   }, [search, dataPerPage, selectedpage]);
 
+  // handle-return-product
+  
+
   return (
     <>
+      {returnModel ? (
+        <ReturnProductModel
+          show={returnModel}
+          onHide={() => setReturnModel(false)}
+        />
+      ) : (
+        ""
+      )}
       <div className="my-4">
         <input
           type="text"
