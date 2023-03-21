@@ -16,6 +16,7 @@ export default function History() {
   const [selectedpage, setSelectedpage] = useState(0);
   const [dataPerPage, setDataPerPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   // get-all-Product-Stock-API-start
   const getAllProductSaleList = async () => {
@@ -54,7 +55,11 @@ export default function History() {
   }, [search, dataPerPage, selectedpage]);
 
   // handle-return-product
-  
+  const handleReturnedProduct = (product) => {
+    console.log(product);
+    setSelectedProduct(product);
+    setReturnModel(true);
+  };
 
   return (
     <>
@@ -62,6 +67,7 @@ export default function History() {
         <ReturnProductModel
           show={returnModel}
           onHide={() => setReturnModel(false)}
+          product={selectedProduct}
         />
       ) : (
         ""
@@ -98,7 +104,9 @@ export default function History() {
             </td>
             <td className="border">{val?.createdAt || ""}</td>
             <td className="border">
-              <button type="button">Return</button>
+              <button type="button" onClick={() => handleReturnedProduct(val)}>
+                Return
+              </button>
             </td>
           </tr>
         ))}

@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 //Modal
 import Modal from "react-bootstrap/Modal";
 // Icons
 import Icons from "@helper/icons";
 
 function ReturnProductModel(props) {
-  const { onHide } = props;
+  const { onHide, product } = props;
+  const [randomKey, setRandomKey] = useState("");
+  console.log(product);
+  useEffect(() => {
+    let nameLength = product?.customerName?.length;
+    setRandomKey(
+      product?.customerName?.substr(0, Math.floor(nameLength / 2)) +
+        product?._id?.substr(nameLength - 4, 4)
+    );
+  }, [product]);
 
   return (
     <>
@@ -17,7 +26,7 @@ function ReturnProductModel(props) {
       >
         <div className="return-modal-wrapper p-5">
           <h4>Are you sure to return the product</h4>
-          <h1>1va7Ga</h1>
+          <h1>{randomKey}</h1>
           <input type="text" />
           <div>
             <button>Submit</button>
