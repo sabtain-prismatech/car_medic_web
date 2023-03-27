@@ -29,6 +29,13 @@
     "Date & Time",
     "Action"
   ],
+  "servicesTableHeadings": [
+    "#",
+    "Name",
+    "Price",
+    "Discription",
+    "Action"
+  ],
   "productStockTableHeadings": [
     "#",
     "Product Name",

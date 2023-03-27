@@ -18,6 +18,8 @@ const Customer = lazy(() => import("@pages/Customer"));
 const Vehicle = lazy(() => import("@pages/Vehicle"));
 const Expense = lazy(() => import("@pages/Expense"));
 const Products = lazy(() => import("@pages/Products"));
+const Services = lazy(() => import("@pages/Services"));
+const Order = lazy(() => import("@pages/Order"));
 
 //config
 import config from "@config/config.json";
@@ -51,6 +53,8 @@ export default function routes() {
             <Route path={url + "vehicle"} element={<Vehicle />} />
             <Route path={url + "expense"} element={<Expense />} />
             <Route path={url + "products"} element={<Products />} />
+            <Route path={url + "services"} element={<Services />} />
+            <Route path={url + "customer/order"} element={<Order />} />
           </Route>
 
           <Route path={url + "*"} element={<div>Page not Found</div>} />

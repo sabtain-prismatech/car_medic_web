@@ -150,7 +150,7 @@ export default function Content() {
             pageCount={Number(customerInfo?.pages)}
             selectedpage={(value) => setSelectedpage(value)}
           />
-          <PageSelection dataPerPage={(value) => setDataPerPage(value)} />
+          <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
         </div>
       </div>
     </>

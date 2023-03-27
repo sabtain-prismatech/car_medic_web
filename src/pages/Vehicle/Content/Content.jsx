@@ -71,7 +71,7 @@ export default function Content() {
           pageCount={Number(vehicleList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} />
+        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );

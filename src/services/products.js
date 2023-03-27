@@ -79,3 +79,19 @@ export const createSaleProductApi = async (data) => {
   }
 };
 // Create-Sale-Product-end
+
+// Return-Product-start
+export const returnProductApi = async (data) => {
+  //endPoint
+  const endPoint = "/product/return";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On return  product API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// Return-Product-end

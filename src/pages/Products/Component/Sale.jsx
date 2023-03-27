@@ -67,12 +67,12 @@ export default function Sale() {
               {val?.quantity.$numberDecimal || 0}{" "}
               {val?.productType === "liquid" ? "ltr" : ""}
             </td>
-            <td className="border">{val?.buyPrice || ""}</td>
-            <td className="border">{val?.salePrice || ""}</td>
-            <td className="border">{val?.discount || ""}</td>
-            <td className="border">{val?.profit || ""}</td>
+            <td className="border">{val?.buyPrice || 0}</td>
+            <td className="border">{val?.salePrice || 0}</td>
+            <td className="border">{val?.discount || 0}</td>
+            <td className="border">{val?.profit || 0}</td>
             <td className="border">
-              {val?.salePrice / val?.quantity.$numberDecimal} (per)
+              {val?.salePrice / val?.quantity.$numberDecimal || 0} (per)
             </td>
             <td className="border">{val?.updatedAt || ""}</td>
           </tr>
@@ -84,7 +84,7 @@ export default function Sale() {
           pageCount={Number(productList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} />
+        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );

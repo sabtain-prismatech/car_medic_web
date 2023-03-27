@@ -17,6 +17,7 @@ export default function History() {
   const [dataPerPage, setDataPerPage] = useState(1);
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [refreshList, setRefreshList] = useState(false);
 
   // get-all-Product-Stock-API-start
   const getAllProductSaleList = async () => {
@@ -54,6 +55,14 @@ export default function History() {
     }
   }, [search, dataPerPage, selectedpage]);
 
+  // refresh the list
+  useEffect(() => {
+    if (refreshList) {
+      setRefreshList(false);
+      getAllProductSaleList();
+    }
+  }, [refreshList]);
+
   // handle-return-product
   const handleReturnedProduct = (product) => {
     console.log(product);
@@ -68,6 +77,7 @@ export default function History() {
           show={returnModel}
           onHide={() => setReturnModel(false)}
           product={selectedProduct}
+          refreshList={(value) => setRefreshList(value)}
         />
       ) : (
         ""
@@ -98,7 +108,7 @@ export default function History() {
                 val?.salePrice * val?.quantity.$numberDecimal
               }`}
             </td>
-            <td className="border">{val?.discount || ""}</td>
+            <td className="border">{val?.discount || 0}</td>
             <td className="border">
               {val?.salePrice * val?.quantity.$numberDecimal - val?.discount}
             </td>
@@ -117,7 +127,7 @@ export default function History() {
           pageCount={Number(productList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} />
+        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );

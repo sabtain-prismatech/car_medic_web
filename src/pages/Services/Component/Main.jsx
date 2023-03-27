@@ -3,40 +3,33 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
-import CreateExpenseModel from "@components/Model/CreateExpense";
-import DateFilter from "@components/DateFilter";
+import CreateServiceModel from "@components/Model/CreateService";
 // config
 import staticData from "@config/config.json";
 // services
-import { expenseListApi } from "@services/expense";
+import { serviceListApi } from "@services/service";
 // date-formatter
 import dateFormat from "dateformat";
 
 export default function Main() {
-  const [expenseList, setExpenseList] = useState([]);
+  const [servicesList, setServicesList] = useState([]);
   const [createModel, setCreateModel] = useState(false);
-  const [updateExpenseList, setUpdateExpenseList] = useState(false);
-  console.log(expenseList);
+  const [updateServiceList, setUpdateServiceList] = useState(false);
   const [search, setSearch] = useState("");
-  const [dateFilter, setDateFilter] = useState({
-    fromDate: dateFormat(new Date(), "yyyy-mm-dd"),
-    toDate: dateFormat(new Date(), "yyyy-mm-dd"),
-  });
+
   const [selectedpage, setSelectedpage] = useState(0);
-  const [dataPerPage, setDataPerPage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(5);
 
   // get-all-vehicle-API-start
-  const getExpenseList = async () => {
+  const getServicesList = async () => {
     const params = {
-      title: search,
-      fromDate: dateFilter.fromDate,
-      toDate: dateFilter.toDate,
+      name: search,
       pageNo: selectedpage,
       perPage: Number(dataPerPage),
     };
-    await expenseListApi(params).then((response) => {
+    await serviceListApi(params).then((response) => {
       if (response?.data?.success) {
-        setExpenseList(response?.data?.data);
+        setServicesList(response?.data?.data);
       } else {
         console.log(response?.data?.message);
       }
@@ -47,28 +40,28 @@ export default function Main() {
   useEffect(() => {
     if (search !== "") {
       const getData = setTimeout(() => {
-        getExpenseList();
+        getServicesList();
       }, 1000);
       return () => clearTimeout(getData);
     } else {
-      getExpenseList();
+      getServicesList();
     }
   }, [search, dataPerPage, selectedpage]);
 
   useEffect(() => {
-    if (updateExpenseList) {
-      setUpdateExpenseList(false);
-      getExpenseList();
+    if (updateServiceList) {
+      setUpdateServiceList(false);
+      getServicesList();
     }
-  }, [updateExpenseList]);
+  }, [updateServiceList]);
 
   return (
     <>
       {createModel ? (
-        <CreateExpenseModel
+        <CreateServiceModel
           show={createModel}
           onHide={() => setCreateModel(false)}
-          updateExpenseList={(value) => setUpdateExpenseList(value)}
+          updateServiceList={(value) => setUpdateServiceList(value)}
         />
       ) : (
         ""
@@ -77,7 +70,7 @@ export default function Main() {
         <div className="mb-5">
           <input
             type="text"
-            placeholder="Search Expense"
+            placeholder="Search Services"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
           />
@@ -86,25 +79,16 @@ export default function Main() {
             className="ms-3"
             onClick={() => setCreateModel(true)}
           >
-            Add Expense
+            Add Service
           </button>
-
-          <div className="mt-2">
-            <DateFilter
-              dateFilter={dateFilter}
-              setDateFilter={(value) => setDateFilter(value)}
-              clickEvent={getExpenseList}
-            />
-          </div>
         </div>
-        <Table theading={staticData.expenseTableHeadings}>
-          {expenseList?.expenses?.map((val, index) => (
+        <Table theading={staticData.servicesTableHeadings}>
+          {servicesList?.services?.map((val, index) => (
             <tr key={index}>
               <td className="border">{index + 1}</td>
-              <td className="border">{val?.title || ""}</td>
-              <td className="border">{val?.amount || ""}</td>
+              <td className="border">{val?.name || ""}</td>
+              <td className="border">{val?.price || 0}</td>
               <td className="border">{val?.description || "N/A"}</td>
-              <td className="border">{val?.createdAt}</td>
             </tr>
           ))}
         </Table>
@@ -112,10 +96,10 @@ export default function Main() {
 
       <div className="mt-5">
         <Pagination
-          pageCount={Number(expenseList?.pages)}
+          pageCount={Number(servicesList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
+        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage}  />
       </div>
     </>
   );

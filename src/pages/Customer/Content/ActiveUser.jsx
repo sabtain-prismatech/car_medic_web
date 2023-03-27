@@ -7,6 +7,8 @@ import EditCustomerModel from "@components/Model/EditCustomer";
 import staticData from "@config/config.json";
 // helpers
 import Icons from "@helper/icons";
+// react-router-dom
+import { Link } from "react-router-dom";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
 
@@ -62,7 +64,7 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
       {editCustomerPop ? (
         <EditCustomerModel
           customerInfo={selectedCustomer}
-          updateCustomerList={(value)=>updateCustomerList(value)}
+          updateCustomerList={(value) => updateCustomerList(value)}
           show={editCustomerPop}
           onHide={() => setEditCustomerPop(false)}
         />
@@ -81,7 +83,9 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
               ))}
             </td>
             <td className="border">
-              <button>Create Order</button>
+              <Link to="/customer/order">
+                <button>Create Order</button>
+              </Link>
             </td>
             <td className="border">
               {val?.vehicles?.length} ,{" "}

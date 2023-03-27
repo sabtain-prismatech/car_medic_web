@@ -138,7 +138,7 @@ export default function Stock({ stock }) {
           pageCount={Number(productList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} />
+        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );
