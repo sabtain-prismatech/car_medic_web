@@ -1,0 +1,72 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.button {
+  @extend %borderOutline;
+  letter-spacing: 0.5px;
+  transition: 0.4s linear all;
+  text-transform: capitalize;
+}
+
+.btn {
+  // sizes
+  &_lg {
+    height: 5rem;
+    padding: 0px 25px;
+    border-radius: 5px;
+    @include fontstyle(15px, 600, auto);
+    i {
+      font-size: 20px;
+      margin-right: 12px;
+    }
+  }
+  &_md {
+    height: 4rem;
+    padding: 0px 17px;
+    border-radius: 5px;
+    @include fontstyle(14px, 600, auto);
+    i {
+      font-size: 18px;
+      margin-right: 9px;
+    }
+  }
+  &_sm {
+    height: 2.5rem;
+    padding: 0px 10px;
+    border-radius: 4px;
+    @include fontstyle(12px, 600, auto);
+    i {
+      font-size: 13px;
+      margin-right: 5px;
+    }
+  }
+}
+
+// primary-btn-fill
+.btn_primary.btn_fill {
+  background-color: $pink-ff4;
+  color: $white;
+  &:hover {
+    background-color: darken($color: $pink-ff4, $amount: 10);
+  }
+}
+// primary-btn-outlined
+.btn_primary.btn_outline {
+  background-color: $white;
+  color: $pink-ff4;
+  border: 1px solid $pink-ff4;
+  &:hover {
+    @include hover($white, $pink-ff4);
+  }
+}
+// secondary-btn-fill
+.btn_secondary.btn_fill {
+  background-color: $pink-ffd;
+  color: $pink-ff4;
+  &:hover {
+    background-color: darken($color: $pink-ffd, $amount: 5);
+  }
+}

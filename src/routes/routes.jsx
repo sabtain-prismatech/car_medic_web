@@ -11,6 +11,7 @@ import { PrivateLogin } from "./PrivateRoute";
 import { tokenStorage } from "@localStorage";
 
 // ----pages---- //
+const Widgets = lazy(() => import("@pages/Widgets"));
 const Login = lazy(() => import("@pages/Login"));
 const Register = lazy(() => import("@pages/Register"));
 const Dashboard = lazy(() => import("@pages/Dashboard"));
@@ -44,6 +45,7 @@ export default function routes() {
         }
       >
         <Routes>
+          <Route path={url + "widgets"} element={<Widgets />} />
           <Route path={url + "login"} element={<Login />} />
           <Route path={url + "register"} element={<Register />} />
 

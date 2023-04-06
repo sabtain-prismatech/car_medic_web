@@ -1,0 +1,70 @@
+// Size-mixin
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+  @content;
+}
+// Button mixin
+@mixin button(
+  $width,
+  $height,
+  $b-radius,
+  $b-color,
+  $color,
+  $fontsize,
+  $fontweight,
+  $padding
+) {
+  width: $width;
+  height: $height;
+  border-radius: $b-radius;
+  background-color: $b-color;
+  color: $color;
+  font-size: $fontsize;
+  font-weight: $fontweight;
+  padding: 0px $padding;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  @content;
+}
+// Font-Styling
+@mixin fontstyle($fontSize, $fontWeight, $color) {
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  color: $color;
+  @content;
+}
+// hover mixin
+@mixin hover($color, $bg-color) {
+  color: $color;
+  background-color: $bg-color;
+  @content;
+}
+// Background-Images
+@mixin bgImage($url, $bgSize, $repeat, $position) {
+  background-image: url($url);
+  background-size: $bgSize;
+  background-repeat: $repeat;
+  background-position: $position;
+  @content;
+}
+// Input-Fields
+@mixin input(
+  $width,
+  $height,
+  $round,
+  $bg,
+  $color,
+  $padding,
+  $fontSize,
+  $fontWeight
+) {
+  @include size($width, $height);
+  @include fontstyle($fontSize, $fontWeight, $color);
+  @extend %borderOutline;
+  border-radius: $round;
+  background: $bg;
+  padding: $padding;
+  @content;
+}

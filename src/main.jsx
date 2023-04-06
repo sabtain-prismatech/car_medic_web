@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+// style
+import "@styles/scss/style.scss";
 // React-Router-Dom
 import { BrowserRouter } from "react-router-dom";
 // Redux-provider

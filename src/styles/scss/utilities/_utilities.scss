@@ -1,0 +1,22 @@
+// Error-Msg
+.error-msg {
+  @include fontstyle(11px, 500, red);
+}
+.error-msg-big {
+  @include fontstyle(14px, 500, red);
+}
+.outline-0 {
+  outline: none !important;
+}
+// list-style-none
+.list-none {
+  list-style: none;
+}
+// background-transparent
+.bg-transparent {
+  background-color: transparent;
+}
+// Cursor-Pointer
+.cursor-pointer {
+  cursor: pointer !important;
+}
