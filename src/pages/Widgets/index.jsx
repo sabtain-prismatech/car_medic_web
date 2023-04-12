@@ -3,10 +3,27 @@ import React from "react";
 import Button from "@components/SharedComponents/Button";
 import Typography from "@components/SharedComponents/Typography";
 import Colors from "@components/SharedComponents/Colors";
+import InputField from "@components/SharedComponents/InputField";
 // react-icons
 import Icons from "@helper/icons";
-
+// Formik
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 export default function Widgets() {
+  //initial values
+  const initialValues = {
+    exampleOne: "",
+  };
+  //validation
+  const validationSchema = Yup.object().shape({
+    exampleOne: Yup.string().required("Required"),
+  });
+  // onSubmit
+  const onSubmit = async (values) => {
+    console.log(values);
+    window.alert(JSON.stringify(values));
+  };
+
   return (
     <>
       <div className="widgets-wrapper p-5">
@@ -129,12 +146,28 @@ export default function Widgets() {
         </div>
         {/* color-utilites-end */}
         <hr className="my-4" />
-        {/* form-start */}
+        {/* Form-Start */}
         <h3 className="text-danger fs-2 fw-bold">
           <u>4. Form</u>
         </h3>
-        <div className="p-4"></div>
-        {/* form-end */}
+        <div className="p-4">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            {(formik) => (
+              <Form>
+                <InputField
+                  label="Example 1"
+                  name="exampleOne"
+                  formik={formik}
+                />
+              </Form>
+            )}
+          </Formik>
+        </div>
+        {/* Form-End */}
       </div>
     </>
   );
