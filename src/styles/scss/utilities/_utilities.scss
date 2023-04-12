@@ -14,10 +14,7 @@
 
 // Error-Msg
 .error-msg {
-  @include fontstyle(11px, 500, red);
-}
-.error-msg-big {
-  @include fontstyle(14px, 500, red);
+  @include fontstyle(12px, 500, $danger);
 }
 .outline-0 {
   outline: none !important;

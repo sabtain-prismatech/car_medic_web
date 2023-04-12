@@ -158,11 +158,32 @@ export default function Widgets() {
           >
             {(formik) => (
               <Form>
-                <InputField
-                  label="Example 1"
-                  name="exampleOne"
-                  formik={formik}
-                />
+                <div className="row">
+                  <div className="col-4">
+                    <InputField
+                      label="Large Input"
+                      name="exampleOne"
+                      formik={formik}
+                      size="lg"
+                      type="password"
+                    />
+                  </div>
+                  <div className="col-4">
+                    <InputField
+                      label="Meduim Input"
+                      name="exampleOne"
+                      formik={formik}
+                    />
+                  </div>
+                  <div className="col-4">
+                    <InputField
+                      label="Small input"
+                      name="exampleOne"
+                      formik={formik}
+                      size="sm"
+                    />
+                  </div>
+                </div>
               </Form>
             )}
           </Formik>
