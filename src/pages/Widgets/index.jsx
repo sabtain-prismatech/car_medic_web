@@ -2,6 +2,7 @@ import React from "react";
 // button
 import Button from "@components/SharedComponents/Button";
 import Typography from "@components/SharedComponents/Typography";
+import Colors from "@components/SharedComponents/Colors";
 // react-icons
 import Icons from "@helper/icons";
 
@@ -12,7 +13,9 @@ export default function Widgets() {
         <h2 className="text-center text-success fs-1 fw-bold">Widgets</h2>
         <hr className="my-4" />
         {/* buttons-start */}
-        <h3 className="text-danger fs-2 fw-semibold">1. Button</h3>
+        <h3 className="text-danger fs-2 fw-bold">
+          <u>1. Button</u>
+        </h3>
         <div className="p-4 d-flex flex-wrap">
           <div className="me-5">
             <h1 className="fs-5 fw-semibold mb-3">
@@ -66,10 +69,12 @@ export default function Widgets() {
         {/* buttons-end */}
         <hr className="my-4" />
         {/* Typography-start */}
-        <h3 className="text-danger fs-2 fw-semibold">2. Typography</h3>
+        <h3 className="text-danger fs-2 fw-bold">
+          <u>2. Typography</u>
+        </h3>
         <div className="p-4">
-          <Typography variant="h1" fw="bold">
-            Heading One 40px
+          <Typography variant="h1" fw="bold" color="txt_primary">
+            Heading One <span className="primary">40px</span>
           </Typography>
           <Typography variant="h2" fw="semibold">
             Heading Two 24px
@@ -110,6 +115,26 @@ export default function Widgets() {
           </Typography>
         </div>
         {/* Typography-end */}
+        <hr className="my-4" />
+        {/* color-utilites-start */}
+        <h3 className="text-danger fs-2 fw-bold">
+          <u>3. Colors Utilites</u>
+        </h3>
+        <div className="p-4">
+          <Colors bg="#ff438c">
+            Color = (.primary) , BG-Color = (.bg_primary)
+          </Colors>
+          <Colors bg="#93ddff"> BG-Color = (.bg_secondary)</Colors>
+          <Colors bg="#505050">Text-Color = (.txt_primary) </Colors>
+        </div>
+        {/* color-utilites-end */}
+        <hr className="my-4" />
+        {/* form-start */}
+        <h3 className="text-danger fs-2 fw-bold">
+          <u>4. Form</u>
+        </h3>
+        <div className="p-4"></div>
+        {/* form-end */}
       </div>
     </>
   );

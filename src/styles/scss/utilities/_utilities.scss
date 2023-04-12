@@ -1,3 +1,17 @@
+// colors
+.primary {
+  color: $pink-ff4;
+}
+.bg_primary {
+  background-color: $pink-ff4;
+}
+.bg_secondary {
+  background-color: $blue-93d;
+}
+.txt_primary {
+  color: $black-505;
+}
+
 // Error-Msg
 .error-msg {
   @include fontstyle(11px, 500, red);
