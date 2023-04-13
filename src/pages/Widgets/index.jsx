@@ -4,11 +4,15 @@ import Button from "@components/SharedComponents/Button";
 import Typography from "@components/SharedComponents/Typography";
 import Colors from "@components/SharedComponents/Colors";
 import InputField from "@components/SharedComponents/InputField";
+import Selectbox from "@components/SharedComponents/Selectbox";
 // react-icons
 import Icons from "@helper/icons";
 // Formik
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+// Static Data
+import StaticData from "@config/config.json";
+
 export default function Widgets() {
   //initial values
   const initialValues = {
@@ -159,7 +163,7 @@ export default function Widgets() {
             {(formik) => (
               <Form>
                 <div className="row">
-                  <div className="col-4">
+                  <div className="col-4 mb-5">
                     <InputField
                       label="Large Input"
                       name="exampleOne"
@@ -168,7 +172,7 @@ export default function Widgets() {
                       type="password"
                     />
                   </div>
-                  <div className="col-4">
+                  <div className="col-4 mb-5">
                     <InputField
                       label="Meduim Input"
                       name="exampleOne"
@@ -181,6 +185,12 @@ export default function Widgets() {
                       name="exampleOne"
                       formik={formik}
                       size="sm"
+                    />
+                  </div>
+                  <div className="col-4 mb-5">
+                    <Selectbox
+                      array={StaticData?.selectArray}
+                      notSelected="Select Option"
                     />
                   </div>
                 </div>
