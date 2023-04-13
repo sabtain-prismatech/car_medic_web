@@ -17,10 +17,12 @@ export default function Widgets() {
   //initial values
   const initialValues = {
     exampleOne: "",
+    selectOne: "",
   };
   //validation
   const validationSchema = Yup.object().shape({
     exampleOne: Yup.string().required("Required"),
+    selectOne: Yup.string().required("Required"),
   });
   // onSubmit
   const onSubmit = async (values) => {
@@ -191,6 +193,29 @@ export default function Widgets() {
                     <Selectbox
                       array={StaticData?.selectArray}
                       notSelected="Select Option"
+                      label="Large Select"
+                      name="selectOne"
+                      formik={formik}
+                      size="lg"
+                    />
+                  </div>
+                  <div className="col-4 mb-5">
+                    <Selectbox
+                      array={StaticData?.selectArray}
+                      notSelected="Select Option"
+                      label="Medium Select"
+                      name="selectOne"
+                      formik={formik}
+                    />
+                  </div>
+                  <div className="col-4 mb-5">
+                    <Selectbox
+                      array={StaticData?.selectArray}
+                      notSelected="Select Option"
+                      label="Small Select"
+                      name="selectOne"
+                      formik={formik}
+                      size="sm"
                     />
                   </div>
                 </div>

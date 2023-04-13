@@ -4,13 +4,14 @@
 @import "../common/common";
 @import "../utilities/utilities";
 
-.input-field-wrapper {
+.input-field-wrapper,
+.select-box-wrapper {
   label {
     text-transform: capitalize;
   }
   //   large-label
   label.lg {
-    @include fontstyle(1.6rem, 600, $black-505);
+    @include fontstyle(16px, 600, $black-505);
   }
   //   meduim-label
   label.md {
@@ -20,26 +21,36 @@
   label.sm {
     @include fontstyle(13px, 600, $black-505);
   }
+  i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 13px;
+    font-size: 18px;
+    color: $black-505;
+  }
+}
+
+// Text-and-Password-Input-Fields-start
+.input-field-wrapper {
   .input-wrapper {
     position: relative;
     .input {
-      @include size(100%, 100%);
-      background: #ffffff;
-      box-shadow: 0px 4px 7px rgba(113, 113, 113, 0.25);
-      border: 1px solid rgba(113, 113, 113, 0.25);
-      border-radius: 5px;
-      @extend %borderOutline;
-      padding: 0px 40px 0px 13px;
-      @include fontstyle(14px, 500, $black-505);
-    }
-    // Large-input
-    i {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 15px;
-      font-size: 18px;
-      color: $black-505;
+      @extend %input;
+      &.danger {
+        background-color: $danger-bg;
+        border: 1px solid $danger;
+      }
+      &.success {
+        background-color: $success-bg;
+        border: 1px solid $success;
+      }
+      &.danger:focus {
+        box-shadow: $danger-shadow;
+      }
+      &.success:focus {
+        box-shadow: $success-shadow;
+      }
     }
     i.danger {
       color: $danger;
@@ -47,41 +58,60 @@
     i.success {
       color: $success;
     }
-    .input.danger {
-      background-color: $danger-bg;
-      border: 1px solid $danger;
+    //   large-input-field
+    &.lg {
+      @extend %lg-field;
     }
-    .input.success {
-      background-color: $success-bg;
-      border: 1px solid $success;
+    //   meduim-input-field
+    &.md {
+      @extend %md-field;
     }
-    .input.danger:focus {
-      box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-    }
-    .input.success:focus {
-      box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
-    }
-  }
-  //   large-input-field
-  .input-wrapper.lg {
-    @include size(100%, 48px);
-    .input {
-      @include fontstyle(15px, 500, $black-505);
-    }
-  }
-  //   meduim-input-field
-  .input-wrapper.md {
-    @include size(100%, 40px);
-    .input {
-      @include fontstyle(14px, 500, $black-505);
-    }
-  }
-  //   small-input-field
-  .input-wrapper.sm {
-    @include size(100%, 31px);
-    .input {
-      @include fontstyle(13px, 500, $black-505);
-      box-shadow: none;
+    //   small-input-field
+    &.sm {
+      @extend %sm-field;
     }
   }
 }
+// Text-and-Password-Input-Fields-end
+
+// Select-Box-code-Start
+.select-box-wrapper {
+  .select-inner {
+    position: relative;
+    .select-input {
+      @extend %input;
+    }
+    //   large-select-field
+    &.lg {
+      @extend %lg-field;
+    }
+    //   meduim-select-field
+    &.md {
+      @extend %md-field;
+    }
+    //   small-select-field
+    &.sm {
+      @extend %sm-field;
+    }
+    .select-input.danger {
+      background-color: $danger-bg;
+      border: 1px solid $danger;
+    }
+    .select-input.success {
+      background-color: $success-bg;
+      border: 1px solid $success;
+    }
+    .select-input.danger:focus {
+      box-shadow: $danger-shadow;
+    }
+    .select-input.success:focus {
+      box-shadow: $success-shadow;
+    }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+  }
+}
+// Select-Box-code-End
