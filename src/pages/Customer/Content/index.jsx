@@ -6,11 +6,14 @@ import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
 import ActiveUser from "./ActiveUser";
 import InActiveUser from "./InactiveUser";
+import Button from "@components/SharedComponents/Button";
 // Tabs
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 // services
 import { getAllCustomersApi } from "@services/customer";
+// Icons
+import Icons from "@helper/icons";
 
 export default function Content() {
   const [addModel, setAddModel] = useState(false);
@@ -61,7 +64,7 @@ export default function Content() {
 
   return (
     <>
-      <div className="mt-5">
+      <div className="">
         {addModel ? (
           <CreateCustomerModel
             show={addModel}
@@ -80,36 +83,42 @@ export default function Content() {
         ) : (
           ""
         )}
-        <div className="d-flex justify-content-center mb-3">
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => setAddModel(true)}
-          >
-            Add Customer
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger ms-4"
-            onClick={() => setFilterModel(true)}
-          >
-            Filter
-          </button>
-          <button
-            type="button"
-            className="btn btn-success ms-4"
-            onClick={() =>
-              setFilter({
-                name: "",
-                vehicleNo: "",
-                vehicleBrand: "",
-                vehicleModel: "",
-                phone: "",
-              })
-            }
-          >
-            Reset
-          </button>
+        <div className="d-flex justify-content-end mb-3">
+          <div className="d-flex align-items-center">
+            <i
+              onClick={() =>
+                setFilter({
+                  name: "",
+                  vehicleNo: "",
+                  vehicleBrand: "",
+                  vehicleModel: "",
+                  phone: "",
+                })
+              }
+            >
+              <Icons.GrIcons.GrPowerReset />
+            </i>
+            <Button
+              type="button"
+              size="md"
+              align="mx-3"
+              variant="outline"
+              className="btn btn-danger ms-4"
+              onClick={() => setFilterModel(true)}
+              startIcon={<Icons.BsIcons.BsListTask />}
+            >
+              Filter
+            </Button>
+            <Button
+              type="button"
+              size="md"
+              onClick={() => setAddModel(true)}
+              startIcon={<Icons.BsIcons.BsPlusCircleFill />}
+              align="ms-auto"
+            >
+              Add Customer
+            </Button>
+          </div>
         </div>
         <Tabs
           id="controlled-tab-example"
@@ -150,7 +159,10 @@ export default function Content() {
             pageCount={Number(customerInfo?.pages)}
             selectedpage={(value) => setSelectedpage(value)}
           />
-          <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
+          <PageSelection
+            dataPerPage={(value) => setDataPerPage(value)}
+            value={dataPerPage}
+          />
         </div>
       </div>
     </>

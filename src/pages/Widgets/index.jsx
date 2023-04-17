@@ -5,6 +5,8 @@ import Typography from "@components/SharedComponents/Typography";
 import Colors from "@components/SharedComponents/Colors";
 import InputField from "@components/SharedComponents/InputField";
 import Selectbox from "@components/SharedComponents/Selectbox";
+import Checkbox from "@components/SharedComponents/Checkbox";
+import Radio from "@components/SharedComponents/Radio";
 // react-icons
 import Icons from "@helper/icons";
 // Formik
@@ -18,6 +20,8 @@ export default function Widgets() {
   const initialValues = {
     exampleOne: "",
     selectOne: "",
+    checkOne: "",
+    radioOne: "",
   };
   //validation
   const validationSchema = Yup.object().shape({
@@ -156,7 +160,7 @@ export default function Widgets() {
         <h3 className="text-danger fs-2 fw-bold">
           <u>4. Form</u>
         </h3>
-        <div className="p-4">
+        <div className="p-4 ">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -164,7 +168,7 @@ export default function Widgets() {
           >
             {(formik) => (
               <Form>
-                <div className="row">
+                <div className="row border p-4 rounded">
                   <div className="col-4 mb-5">
                     <InputField
                       label="Large Input"
@@ -218,6 +222,14 @@ export default function Widgets() {
                       size="sm"
                     />
                   </div>
+                  <div className="col-4 mb-5">
+                    <Checkbox label="One" name="checkOne" value="one" /> <br />
+                    <Checkbox label="Two" name="checkOne" value="two" />
+                    <br />
+                    <Radio label="ONE" name="radioOne" value="one" /> <br />
+                    <Radio label="TWO" name="radioOne" value="two" />
+                  </div>
+                  <button type="submit">Submit</button>
                 </div>
               </Form>
             )}

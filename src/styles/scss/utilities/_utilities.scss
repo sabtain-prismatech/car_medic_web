@@ -31,3 +31,8 @@
 .cursor-pointer {
   cursor: pointer !important;
 }
+// React-Toast-code-start
+.carCare-toast {
+  @include fontstyle(14px, 500, $black-505);
+  width: 400px;
+}

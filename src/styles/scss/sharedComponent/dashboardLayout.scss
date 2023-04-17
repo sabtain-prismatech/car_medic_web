@@ -1,0 +1,100 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.dashboard-layout-wrapper {
+  @include size(100%, 100vh);
+  min-height: 100vh;
+  position: relative;
+  // sidenav-&-content-start
+  .sidenav-content-wrapper {
+    // side-nav-start
+    .sidenav-wrapper {
+      transition: 0.1s linear all;
+      width: 230px;
+      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+      background: $white;
+      overflow: auto;
+      transition: 0.2s linear all;
+      @media screen and (max-width: 768px) {
+        width: 180px;
+      }
+      .logo-nav {
+        height: 60px;
+        padding: 0px 15px;
+        .faa-icon {
+          @include fontstyle(16px, 500, $black-505);
+        }
+      }
+      ul {
+        list-style: none;
+        margin-top: 2.5rem;
+      }
+      .sidenav-link {
+        display: block;
+        padding: 0px 18px 0px 14px;
+        text-decoration: none;
+        border-left: 5px solid transparent;
+        .sidenav-div {
+          height: 40px;
+        }
+        span {
+          @include fontstyle(13px, 500, $black-505);
+          @media screen and (max-width: 768px) {
+            @include fontstyle(11px, 500, $black-505);
+          }
+        }
+        i {
+          @include fontstyle(18px, 500, $gray-999);
+          @media screen and (max-width: 768px) {
+            @include fontstyle(14px, 500, $gray-999);
+          }
+        }
+      }
+      .sidenav-link.active {
+        border-left: 4px solid $pink-ff4;
+        background-color: $gray-f6f;
+        span {
+          color: $pink-ff4;
+          font-weight: 600;
+        }
+        i {
+          color: $pink-ff4;
+        }
+      }
+    }
+    // side-nav-end
+    // content-code-start
+    .content-wrapper {
+      @include size(100%, 100%);
+      background-color: $gray-f6f;
+      display: block;
+      margin: 0px 0px 0px 230px;
+      transition: 0.2s linear all;
+      overflow: hidden;
+      z-index: 11;
+      height: 100vh;
+      overflow: auto;
+      @media screen and (max-width: 768px) {
+        margin: 0px 0px 0px 180px;
+      }
+      .topnav-wrapper {
+        height: 60px;
+        background-color: $white;
+      }
+      .inner-container {
+        width: 95%;
+        margin: 3rem 0px;
+      }
+    }
+    // content-code-end
+  }
+  // sidenav-&-content-end
+}

@@ -9,12 +9,16 @@ export default function Button({
   variant = "fill",
   btn = "primary",
   startIcon,
+  align = "me-auto",
+  onClick,
+  classes,
 }) {
   return (
     <>
       <button
         type={type}
-        className={`button btn_${size} btn_${variant} btn_${btn} d-flex align-items-center`}
+        className={`button btn_${size} btn_${variant} btn_${btn} d-flex align-items-center ${align} ${classes}`}
+        onClick={onClick}
       >
         {startIcon && <i>{startIcon}</i>} {children}
       </button>

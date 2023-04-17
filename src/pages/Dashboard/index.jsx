@@ -1,14 +1,11 @@
 import React from "react";
 // Components
-import SideNav from "@components/SideNav";
+import DashboardLayout from "@components/DashboardLayout";
 
 export default function Dashboard() {
   return (
-    <>
-      <div className="p-5">
-        <h1>Dashboard</h1>
-        <SideNav />
-      </div>
-    </>
+    <React.Fragment>
+      <DashboardLayout title="Dashboard">aaaaaaaaaaaa</DashboardLayout>
+    </React.Fragment>
   );
 }

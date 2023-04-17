@@ -115,3 +115,10 @@
   }
 }
 // Select-Box-code-End
+
+// checkbox-code-start
+.checkbox-label,
+.radio-label {
+  @include fontstyle(14px, 600, $black-505);
+}
+// checkbox-code-end
