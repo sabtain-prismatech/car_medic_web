@@ -1,5 +1,5 @@
 export default {
-  logo: {
-    logo_1: require(""),
+  graph: {
+    orange: "@assets/images/svgs/graph-line-orange.svg",
   },
 };

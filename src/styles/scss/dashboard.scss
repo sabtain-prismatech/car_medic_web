@@ -1,0 +1,72 @@
+@import "variables/variables";
+@import "mixin/mixin";
+@import "extend/extend";
+@import "common/common";
+@import "utilities/utilities";
+
+.dashboard-analytics-wrapper {
+  .card-one-wrapper {
+    .gradiant-card {
+      border-radius: 8px;
+      box-shadow: 3px 3px 115px rgba(166, 166, 166, 0.15);
+      .icon-div {
+        @include size(45px, 45px);
+        border-radius: 10px;
+        i {
+          font-size: 16px;
+        }
+      }
+    }
+    .gradiant-card.card-1 {
+      background: $gradiant1;
+      .icon-div {
+        background: #ffd6e6;
+        i {
+          color: #ff1f75;
+        }
+      }
+    }
+    .gradiant-card.card-2 {
+      background: $gradiant2;
+      .icon-div {
+        background: #ffe8d3;
+        i {
+          color: #f0a101;
+        }
+      }
+    }
+    .gradiant-card.card-3 {
+      background: $gradiant3;
+      .icon-div {
+        background: #d8ecff;
+        i {
+          color: #0800ff;
+        }
+      }
+    }
+    .gradiant-card.card-4 {
+      background: $gradiant4;
+      .icon-div {
+        background: #c6ffcc;
+        i {
+          color: #008514;
+        }
+      }
+    }
+  }
+
+  //   card-two-start
+  .card-two-wrapper {
+    border-radius: 8px;
+    background-color: $white;
+    .icon-div {
+      @include size(45px, 45px);
+      background-color: $blue-cae;
+      border-radius: 10px;
+      i {
+        font-size: 16px;
+        color: $black-505;
+      }
+    }
+  }
+}
