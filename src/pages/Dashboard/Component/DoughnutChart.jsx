@@ -6,7 +6,6 @@ export default function UserDoughnutChart() {
   const [chartOptions, setChartOptions] = useState({});
 
   useEffect(() => {
-    const documentStyle = getComputedStyle(document.documentElement);
     const data = {
       labels: ["Total users", "Repeated Users"],
       datasets: [

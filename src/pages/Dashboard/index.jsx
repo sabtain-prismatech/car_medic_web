@@ -20,11 +20,16 @@ import lineBar from "@assets/images/svgs/line-bar.svg";
 // Icons
 import icons from "@helper/icons";
 // services
-import { getDashboardAnalyticsApi } from "@services/dashboard";
+import {
+  getDashboardAnalyticsApi,
+  salesAndexpenseGraphApi,
+} from "@services/dashboard";
 
 export default function Dashboard() {
   const [analytics, setAnalytics] = useState({});
+  const [saleExpenseChart, setSaleExpenseChart] = useState({});
 
+  // get-analytics-values-function
   const getAnalyticsFun = async () => {
     await getDashboardAnalyticsApi({}).then((response) => {
       if (response?.data?.success) {
@@ -34,9 +39,24 @@ export default function Dashboard() {
       }
     });
   };
+  // get-expense-and-sales-graphs-value-function
+  const getSalesAndExpenseFun = async () => {
+    const payload = {
+      year: "2023",
+      month: -1,
+    };
+    await salesAndexpenseGraphApi(payload).then((response) => {
+      if (response?.data?.success) {
+        setSaleExpenseChart(response?.data?.data || {});
+      } else {
+        console.log(response?.data?.message);
+      }
+    });
+  };
 
   useEffect(() => {
     getAnalyticsFun();
+    getSalesAndExpenseFun();
   }, []);
 
   const analyticsCardData = [
@@ -110,31 +130,31 @@ export default function Dashboard() {
             ))}
           </div>
           <div className="row ">
-            <div className="col-6 ">
-              <div className="bg-white p-5 rounded-2">
-                <Typography variant="body1" fw="bold" style="mb-4">
-                  User Analytics
-                </Typography>
-                <div className=" w-75 mx-auto">
-                  <UserDoughnutChart />
+            {analyticsCardDataTwo.map((val, index) => (
+              <CardTwo key={index} values={val} />
+            ))}
+          </div>
+          {Object.keys(saleExpenseChart).length > 0 ? (
+            <div className="row mt-4">
+              <div className="col-9">
+                <div className="p-5 bg-white rounded-2">
+                  <SalesLineChart chartValues={saleExpenseChart} />
+                </div>
+              </div>
+              <div className="col-3 bg-white">
+                <div className="bg-white rounded-2">
+                  <Typography variant="body1" fw="bold" style="mb-4 p-5">
+                    User Analytics
+                  </Typography>
+                  <div className=" w-75 mx-auto">
+                    <UserDoughnutChart />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="col-6 ">
-              <div className="row">
-                {analyticsCardDataTwo.map((val, index) => (
-                  <CardTwo key={index} values={val} />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-12">
-              <div className="p-5 bg-white rounded-2">
-                <SalesLineChart />
-              </div>
-            </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
       </DashboardLayout>
     </React.Fragment>

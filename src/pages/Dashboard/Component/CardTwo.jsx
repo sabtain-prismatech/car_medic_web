@@ -5,7 +5,7 @@ import Typography from "@components/SharedComponents/Typography";
 export default function CardTwo({ values }) {
   return (
     <>
-      <div className="col-6 mb-4">
+      <div className="col-3 mb-4">
         <div className="card-two-wrapper p-4 h-100">
           <div className="d-flex">
             <div className="icon-div d-flex justify-content-center align-items-center mb-4 me-3">
