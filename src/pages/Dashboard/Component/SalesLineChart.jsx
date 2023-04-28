@@ -26,6 +26,15 @@ export default function SalesLineChart({ chartValues }) {
           borderColor: "#dc3545",
         },
         {
+          label: `Total Profit (${chartValues?.profitValues
+            ?.map(Number)
+            .reduce((acc, val) => acc + val, 0)})`,
+          data: chartValues?.profitValues,
+          fill: false,
+          tension: 0.4,
+          borderColor: "#28a745",
+        },
+        {
           label: `Total Sale (${chartValues?.salesValues
             ?.map(Number)
             .reduce((acc, val) => acc + val, 0)})`,
