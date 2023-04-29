@@ -20,7 +20,7 @@ export default function Content() {
   const [addModel, setAddModel] = useState(false);
   const [filterModel, setFilterModel] = useState(false);
   const [selectedpage, setSelectedpage] = useState(0);
-  const [dataPerPage, setDataPerPage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(5);
   const [tabsKey, setTabsKey] = useState("active");
   const [updateCustomerList, setUpdateCustomerList] = useState(false);
 
@@ -162,14 +162,14 @@ export default function Content() {
             </Tab>
           </Tabs>
         </div>
-        <div className="mt-5">
-          <Pagination
-            pageCount={Number(customerInfo?.pages)}
-            selectedpage={(value) => setSelectedpage(value)}
-          />
+        <div className="mt-5 d-flex justify-content-between align-items-center">
           <PageSelection
             dataPerPage={(value) => setDataPerPage(value)}
             value={dataPerPage}
+          />
+          <Pagination
+            pageCount={Number(customerInfo?.pages)}
+            selectedpage={(value) => setSelectedpage(value)}
           />
         </div>
       </div>

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 // Components
 import Table from "@components/Table";
+import Button from "@components/SharedComponents/Button";
 // config
 import staticData from "@config/config.json";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
+// Icons
+import Icons from "@helper/icons";
+// dateformat
+import dateformat from "dateformat";
 
 export default function InActiveUser({ customerList, updateCustomerList }) {
   const [statusLoader, setStatusLoader] = useState(false);
@@ -35,26 +40,48 @@ export default function InActiveUser({ customerList, updateCustomerList }) {
       <Table theading={staticData.customerTableHeadings}>
         {customerList?.map((val, index) => (
           <tr key={index}>
-            <td className="border">{index + 1}</td>
-            <td className="border">{val?.name}</td>
-            <td className="border">
+            <td>{index + 1}</td>
+            <td>{val?.name}</td>
+            <td>
               {val?.vehicles?.map((vehicle, index) => (
                 <div key={index}>{vehicle?.vehicleNo}</div>
               ))}
             </td>
-            <td className="border">
-              <button disabled>Create Order</button>
+            <td>
+              <Button type="button" btn="secondary" size="sm" disabled={true}>
+                Create Order
+              </Button>
             </td>
-            <td className="border">{val?.vehicles?.length}</td>
-            <td className="border">
+            <td>
+              <div className="d-flex justify-content-center align-items-center ">
+                {val?.vehicles?.length} <span className="mx-2 ">,</span>
+                <Button type="button" btn="secondary" size="sm" disabled={true}>
+                  Add
+                </Button>
+              </div>
+            </td>
+            <td>
               {val?.vehicles?.map((vehicle, index) => (
                 <div key={index}>{vehicle?.vehicleBrand}</div>
               ))}
             </td>
-            <td className="border">{val?.createdAt}</td>
-            <td className="border">{val?.location}</td>
-            <td className="border">{val?.phone}</td>
-            <td className="border">icon</td>
+            <td>{dateformat(val?.createdAt, "dd-mmm-yyyy")}</td>
+            <td>{val?.location}</td>
+            <td>
+              <div className="d-flex justify-content-center align-items-center">
+                {val?.phone}
+                {val?.whatsapp ? (
+                  <i
+                    className="text-success ms-2"
+                    title="This number have whatsapp"
+                  >
+                    <Icons.BsIcons.BsWhatsapp />
+                  </i>
+                ) : (
+                  ""
+                )}
+              </div>
+            </td>
             <td>
               {statusLoader ? (
                 "...loading"
@@ -70,8 +97,12 @@ export default function InActiveUser({ customerList, updateCustomerList }) {
                 </select>
               )}
             </td>
-            <td className="border">
-              <button disabled={true}>Edit</button>
+            <td>
+              <div className="d-flex justify-content-center">
+                <i className="primary" title="Details">
+                  <Icons.BsIcons.BsFillEyeFill />
+                </i>
+              </div>
             </td>
           </tr>
         ))}

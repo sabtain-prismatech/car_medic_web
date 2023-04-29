@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Table from "@components/Table";
 import CreateVehicleModel from "@components/Model/CreateVehicle";
 import EditCustomerModel from "@components/Model/EditCustomer";
+import Button from "@components/SharedComponents/Button";
 // config
 import staticData from "@config/config.json";
 // helpers
@@ -11,6 +12,8 @@ import Icons from "@helper/icons";
 import { Link } from "react-router-dom";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
+// date-format
+import dateformat from "dateformat";
 
 export default function ActiveUser({ customerList, updateCustomerList }) {
   const [addVehicleModel, setAddVehicleModel] = useState(false);
@@ -83,32 +86,47 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
               ))}
             </td>
             <td>
-              <Link to="/customer/order">
-                <button>Create Order</button>
+              <Link to="/customer/order" style={{ textDecoration: "none" }}>
+                <Button type="button" btn="secondary" size="sm">
+                  Create Order
+                </Button>
               </Link>
             </td>
             <td>
-              {val?.vehicles?.length} ,{" "}
-              <button onClick={() => modelHandler(val)}>ADD</button>
+              <div className="d-flex justify-content-center align-items-center">
+                {val?.vehicles?.length} <span className="mx-2">,</span>
+                <Button
+                  type="button"
+                  btn="secondary"
+                  size="sm"
+                  onClick={() => modelHandler(val)}
+                >
+                  Add
+                </Button>
+              </div>
             </td>
             <td>
               {val?.vehicles?.map((vehicle, index) => (
                 <div key={index}>{vehicle?.vehicleBrand}</div>
               ))}
             </td>
-            <td>{val?.createdAt}</td>
+            <td>{dateformat(val?.createdAt, "dd-mmm-yyyy")}</td>
             <td>{val?.location}</td>
             <td>
-              {val?.phone}
-              {val?.whatsapp ? (
-                <i>
-                  <Icons.FaIcons.FaWhatsappSquare />
-                </i>
-              ) : (
-                ""
-              )}
+              <div className="d-flex justify-content-center align-items-center">
+                {val?.phone}
+                {val?.whatsapp ? (
+                  <i
+                    className="text-success ms-2"
+                    title="This number have whatsapp"
+                  >
+                    <Icons.BsIcons.BsWhatsapp />
+                  </i>
+                ) : (
+                  ""
+                )}
+              </div>
             </td>
-            <td>icon</td>
             <td>
               {statusLoader ? (
                 "...loading"
@@ -125,9 +143,18 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
               )}
             </td>
             <td>
-              <button onClick={() => editCustomerModelHandler(val)}>
-                Edit
-              </button>
+              <div className="d-flex justify-content-center">
+                <i
+                  className="me-3 text-success"
+                  onClick={() => editCustomerModelHandler(val)}
+                  title="Edit"
+                >
+                  <Icons.FaIcons.FaEdit />
+                </i>
+                <i className="primary" title="Details">
+                  <Icons.BsIcons.BsFillEyeFill />
+                </i>
+              </div>
             </td>
           </tr>
         ))}

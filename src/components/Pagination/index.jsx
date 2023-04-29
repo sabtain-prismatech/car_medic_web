@@ -3,6 +3,8 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 // React-icons
 import Icons from "@helper/icons";
+// style
+import "@styles/scss/sharedComponent/pagination.scss";
 
 const Pagination = ({ pageCount, selectedpage }) => {
   const handlePageClick = (data) => {

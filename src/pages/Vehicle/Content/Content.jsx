@@ -13,7 +13,7 @@ export default function Content() {
   console.log(vehicleList);
   const [search, setSearch] = useState("");
   const [selectedpage, setSelectedpage] = useState(0);
-  const [dataPerPage, setDataPerPage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(5);
 
   // get-all-vehicle-API-start
   const getVehicleList = async () => {
@@ -57,21 +57,24 @@ export default function Content() {
         <Table theading={staticData.vehiclesTableHeadings}>
           {vehicleList?.vehicles?.map((val, index) => (
             <tr key={index}>
-              <td className="border">{index + 1}</td>
-              <td className="border">{val?.vehicleNo}</td>
-              <td className="border">{val?.vehicleBrand}</td>
-              <td className="border">{val?.vehicleModel}</td>
+              <td>{index + 1}</td>
+              <td>{val?.vehicleNo}</td>
+              <td>{val?.vehicleBrand}</td>
+              <td>{val?.vehicleModel}</td>
             </tr>
           ))}
         </Table>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 d-flex justify-content-between align-items-center">
+        <PageSelection
+          dataPerPage={(value) => setDataPerPage(value)}
+          value={dataPerPage}
+        />
         <Pagination
           pageCount={Number(vehicleList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );
