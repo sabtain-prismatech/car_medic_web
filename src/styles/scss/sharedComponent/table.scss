@@ -1,0 +1,29 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.table-container {
+  overflow: auto;
+  table {
+    width: 100%;
+    min-width: 1000px;
+    thead {
+      tr {
+        background-color: $blue-93d;
+        height: 50px;
+      }
+    }
+    th,
+    td {
+      text-align: center;
+      padding: 8px 5px;
+      @include fontstyle(14px, 700, $black-505);
+    }
+    td {
+      @include fontstyle(14px, 500, gray);
+      padding: 5px 2px;
+    }
+  }
+}

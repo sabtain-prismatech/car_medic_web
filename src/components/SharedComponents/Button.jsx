@@ -12,6 +12,7 @@ export default function Button({
   align = "me-auto",
   onClick,
   classes,
+  title,
 }) {
   return (
     <>
@@ -19,6 +20,7 @@ export default function Button({
         type={type}
         className={`button btn_${size} btn_${variant} btn_${btn} d-flex align-items-center ${align} ${classes}`}
         onClick={onClick}
+        title={title}
       >
         {startIcon && <i>{startIcon}</i>} {children}
       </button>

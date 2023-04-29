@@ -10,6 +10,7 @@ import Button from "@components/SharedComponents/Button";
 // Tabs
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import "@styles/scss/sharedComponent/tabs.scss";
 // services
 import { getAllCustomersApi } from "@services/customer";
 // Icons
@@ -85,7 +86,11 @@ export default function Content() {
         )}
         <div className="d-flex justify-content-end mb-3">
           <div className="d-flex align-items-center">
-            <i
+            <Button
+              type="button"
+              size="md"
+              classes="bg-success"
+              title="Reset"
               onClick={() =>
                 setFilter({
                   name: "",
@@ -96,8 +101,10 @@ export default function Content() {
                 })
               }
             >
-              <Icons.GrIcons.GrPowerReset />
-            </i>
+              <i className="text-white m-0">
+                <Icons.FiIcons.FiRefreshCcw />
+              </i>
+            </Button>
             <Button
               type="button"
               size="md"
@@ -120,40 +127,41 @@ export default function Content() {
             </Button>
           </div>
         </div>
-        <Tabs
-          id="controlled-tab-example"
-          activeKey={tabsKey}
-          onSelect={(k) => setTabsKey(k)}
-          className="tabs d-flex justify-content-start"
-        >
-          <Tab
-            eventKey="active"
-            title={`Active User (${customerInfo?.activeCustomer})`}
+        <div className="tabs-container">
+          <Tabs
+            id="customer-tabs"
+            activeKey={tabsKey}
+            onSelect={(k) => setTabsKey(k)}
+            className="tabs d-flex justify-content-start"
           >
-            <div>
-              {tabsKey === "active" ? (
-                <ActiveUser
+            <Tab
+              eventKey="active"
+              title={`Active User (${customerInfo?.activeCustomer})`}
+            >
+              <div>
+                {tabsKey === "active" ? (
+                  <ActiveUser
+                    customerList={customerInfo?.customers}
+                    updateCustomerList={(value) => setUpdateCustomerList(value)}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            </Tab>
+            <Tab
+              eventKey="inactive"
+              title={`Inactive User (${customerInfo?.inactiveCustomer})`}
+            >
+              <div>
+                <InActiveUser
                   customerList={customerInfo?.customers}
                   updateCustomerList={(value) => setUpdateCustomerList(value)}
                 />
-              ) : (
-                ""
-              )}
-            </div>
-          </Tab>
-          <Tab
-            eventKey="inactive"
-            title={`Inactive User (${customerInfo?.inactiveCustomer})`}
-          >
-            <div>
-              <InActiveUser
-                customerList={customerInfo?.customers}
-                updateCustomerList={(value) => setUpdateCustomerList(value)}
-              />
-            </div>
-          </Tab>
-        </Tabs>
-
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
         <div className="mt-5">
           <Pagination
             pageCount={Number(customerInfo?.pages)}

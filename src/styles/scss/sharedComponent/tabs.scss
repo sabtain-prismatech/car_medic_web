@@ -1,0 +1,32 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.tabs-container {
+  @extend %borderOutline;
+  .nav-tabs {
+    margin-bottom: 20px;
+  }
+  .nav-item {
+    margin-right: 5px;
+    @include size(auto, 50px);
+    .nav-link.active {
+      @include fontstyle(13px, 600, $white);
+      background: $pink-ff4;
+      border-radius: 5px 20px 0px 0px;
+    }
+    .nav-link {
+      background: $pink-ffd;
+      @include size(100%, 100%);
+      border-radius: 5px 20px 0px 0px;
+      padding: 0px 20px;
+      @include fontstyle(13px, 600, $black);
+      cursor: pointer;
+      &:hover {
+        @extend %borderOutline;
+      }
+    }
+  }
+}
