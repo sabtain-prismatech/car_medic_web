@@ -51,7 +51,7 @@ export default function InputField({
                 name={name}
                 placeholder={placeholder}
                 onChange={onChange}
-                className="custom-input border border-success w-100"
+                className={`input`}
               />
             )}
             {type === "password" ? (
@@ -65,12 +65,12 @@ export default function InputField({
                   <Icons.BsIcons.BsEyeSlash />
                 )}
               </i>
-            ) : formik.errors?.[name] && formik.touched?.[name] ? (
+            ) : formik?.errors?.[name] && formik?.touched?.[name] ? (
               <i className="danger">
                 <Icons.MdIcons.MdNotInterested />
               </i>
             ) : (
-              formik.touched?.[name] && (
+              formik?.touched?.[name] && (
                 <i className="success">
                   <Icons.BsIcons.BsCheck2Square />
                 </i>
@@ -78,7 +78,11 @@ export default function InputField({
             )}
           </div>
         </div>
-        <ErrorMessage name={name} component="h6" className="error-msg mt-2" />
+        {formik ? (
+          <ErrorMessage name={name} component="h6" className="error-msg mt-2" />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

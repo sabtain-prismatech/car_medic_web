@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
+import InputField from "@components/SharedComponents/InputField";
 // config
 import staticData from "@config/config.json";
 // services
@@ -47,6 +48,7 @@ export default function Content() {
     <>
       <div className="mt-5">
         <div className="mb-5">
+          <InputField behave="normal" size="md" type="text" />
           <input
             type="text"
             placeholder="Search vehicle No"

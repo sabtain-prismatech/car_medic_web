@@ -1,0 +1,14 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.page-selection {
+  @include size(80px, 28px);
+  border-radius: 5px;
+  border: 1px solid $black-505;
+  outline: none;
+  @include fontstyle(13px, 500, $black-505);
+  padding: 0px 5px;
+}
