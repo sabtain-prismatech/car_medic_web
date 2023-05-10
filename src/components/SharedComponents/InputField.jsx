@@ -17,6 +17,8 @@ export default function InputField({
   disabled = false,
   size = "md",
   margin = "mb-4",
+  value,
+  styles,
 }) {
   const [showPassword, setShowPassword] = useState(false);
   return (
@@ -44,14 +46,17 @@ export default function InputField({
                     ? "danger"
                     : formik.touched?.[name] && "success"
                 }`}
+                style={styles}
               />
             ) : (
               <input
-                type={showPassword ? type : "text"}
+                type={type}
                 name={name}
                 placeholder={placeholder}
                 onChange={onChange}
+                value={value}
                 className={`input`}
+                style={styles}
               />
             )}
             {type === "password" ? (

@@ -1,16 +1,14 @@
 import React from "react";
 // Components
-import SideNav from "@components/SideNav";
 import Main from "./Component/Main";
+import DashboardLayout from "@components/DashboardLayout";
 
 export default function Products() {
   return (
     <>
-      <div className="p-5">
-        <h1>Products</h1>
-        <SideNav />
+      <DashboardLayout title="Products">
         <Main />
-      </div>
+      </DashboardLayout>
     </>
   );
 }

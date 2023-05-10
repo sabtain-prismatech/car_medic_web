@@ -1,16 +1,14 @@
 import React from "react";
 // Components
-import SideNav from "@components/SideNav";
 import Main from "./Component/Main";
+import DashboardLayout from "@components/DashboardLayout";
 
 export default function Expense() {
   return (
     <>
-      <div className="p-5">
-        <h1>Expense</h1>
-        <SideNav />
+      <DashboardLayout title="Expense">
         <Main />
-      </div>
+      </DashboardLayout>
     </>
   );
 }

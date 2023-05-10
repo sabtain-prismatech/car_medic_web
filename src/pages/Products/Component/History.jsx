@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
+import InputField from "@components/SharedComponents/InputField";
+import Button from "@components/SharedComponents/Button";
 // Model
 import ReturnProductModel from "@components/Model/ReturnProduct";
 // config
@@ -14,7 +16,7 @@ export default function History() {
   const [productList, setProductList] = useState([]);
   const [returnModel, setReturnModel] = useState(false);
   const [selectedpage, setSelectedpage] = useState(0);
-  const [dataPerPage, setDataPerPage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(5);
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState({});
   const [refreshList, setRefreshList] = useState(false);
@@ -82,52 +84,62 @@ export default function History() {
       ) : (
         ""
       )}
-      <div className="my-4">
-        <input
+      <div className="mt-4 d-flex justify-content-end">
+        <InputField
+          behave="normal"
+          size="md"
           type="text"
-          placeholder="Enter product name"
-          className="me-5"
+          placeholder="Search Product Name"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
+          styles={{ width: "260px" }}
         />
       </div>
 
       <Table theading={staticData.productSalesHistoryTableHeadings}>
         {productList?.productHistory?.map((val, index) => (
           <tr key={index}>
-            <td className="border">{index + 1}</td>
-            <td className="border">{val?.customerName || ""}</td>
-            <td className="border">{val?.name || ""}</td>
-            <td className="border">{val?.description || ""}</td>
-            <td className="border">
+            <td>{index + 1}</td>
+            <td>{val?.customerName || ""}</td>
+            <td>{val?.name || ""}</td>
+            <td>{val?.description || ""}</td>
+            <td>
               {val?.quantity.$numberDecimal || 0}{" "}
               {val?.productType === "liquid" ? "ltr" : ""}
             </td>
-            <td className="border">
+            <td>
               {`(${val?.quantity.$numberDecimal} x ${val?.salePrice}) , ${
                 val?.salePrice * val?.quantity.$numberDecimal
               }`}
             </td>
-            <td className="border">{val?.discount || 0}</td>
-            <td className="border">
+            <td>{val?.discount || 0}</td>
+            <td>
               {val?.salePrice * val?.quantity.$numberDecimal - val?.discount}
             </td>
-            <td className="border">{val?.createdAt || ""}</td>
-            <td className="border">
-              <button type="button" onClick={() => handleReturnedProduct(val)}>
+            <td>{val?.createdAt || ""}</td>
+            <td>
+              <Button
+                type="button"
+                onClick={() => handleReturnedProduct(val)}
+                btn="secondary"
+                size="sm"
+              >
                 Return
-              </button>
+              </Button>
             </td>
           </tr>
         ))}
       </Table>
 
-      <div className="mt-5">
+      <div className="mt-5 d-flex justify-content-between align-items-center">
+        <PageSelection
+          dataPerPage={(value) => setDataPerPage(value)}
+          value={dataPerPage}
+        />
         <Pagination
           pageCount={Number(productList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );

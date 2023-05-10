@@ -5,12 +5,16 @@ import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
 import CreateExpenseModel from "@components/Model/CreateExpense";
 import DateFilter from "@components/DateFilter";
+import InputField from "@components/SharedComponents/InputField";
+import Button from "@components/SharedComponents/Button";
 // config
 import staticData from "@config/config.json";
 // services
 import { expenseListApi } from "@services/expense";
 // date-formatter
 import dateFormat from "dateformat";
+// Icons
+import Icons from "@helper/icons";
 
 export default function Main() {
   const [expenseList, setExpenseList] = useState([]);
@@ -23,7 +27,7 @@ export default function Main() {
     toDate: dateFormat(new Date(), "yyyy-mm-dd"),
   });
   const [selectedpage, setSelectedpage] = useState(0);
-  const [dataPerPage, setDataPerPage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(5);
 
   // get-all-vehicle-API-start
   const getExpenseList = async () => {
@@ -74,48 +78,54 @@ export default function Main() {
         ""
       )}
       <div className="mt-5">
-        <div className="mb-5">
-          <input
+        <div className=" d-flex justify-content-end">
+          <InputField
+            behave="normal"
+            size="md"
             type="text"
             placeholder="Search Expense"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
+            styles={{ width: "260px" }}
           />
-          <button
+          <Button
             type="button"
-            className="ms-3"
+            size="md"
             onClick={() => setCreateModel(true)}
+            startIcon={<Icons.BsIcons.BsPlusCircleFill />}
+            align="ms-auto"
           >
             Add Expense
-          </button>
-
-          <div className="mt-2">
-            <DateFilter
-              dateFilter={dateFilter}
-              setDateFilter={(value) => setDateFilter(value)}
-              clickEvent={getExpenseList}
-            />
-          </div>
+          </Button>
         </div>
+        <DateFilter
+          dateFilter={dateFilter}
+          setDateFilter={(value) => setDateFilter(value)}
+          clickEvent={getExpenseList}
+        />
         <Table theading={staticData.expenseTableHeadings}>
           {expenseList?.expenses?.map((val, index) => (
             <tr key={index}>
-              <td className="border">{index + 1}</td>
-              <td className="border">{val?.title || ""}</td>
-              <td className="border">{val?.amount || ""}</td>
-              <td className="border">{val?.description || "N/A"}</td>
-              <td className="border">{val?.createdAt}</td>
+              <td>{index + 1}</td>
+              <td>{val?.title || ""}</td>
+              <td>{val?.amount || ""}</td>
+              <td>{val?.description || "N/A"}</td>
+              <td>{val?.createdAt}</td>
+              <td></td>
             </tr>
           ))}
         </Table>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 d-flex justify-content-between align-items-center">
+        <PageSelection
+          dataPerPage={(value) => setDataPerPage(value)}
+          value={dataPerPage}
+        />
         <Pagination
           pageCount={Number(expenseList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );

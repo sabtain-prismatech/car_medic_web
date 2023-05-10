@@ -47,13 +47,15 @@ export default function Content() {
   return (
     <>
       <div className="mt-5">
-        <div className="mb-5">
-          <InputField behave="normal" size="md" type="text" />
-          <input
+        <div className="mb-3 d-flex justify-content-end">
+          <InputField
+            behave="normal"
+            size="md"
             type="text"
             placeholder="Search vehicle No"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
+            styles={{ width: "260px" }}
           />
         </div>
         <Table theading={staticData.vehiclesTableHeadings}>

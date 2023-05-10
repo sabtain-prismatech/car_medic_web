@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
+import InputField from "@components/SharedComponents/InputField";
 // config
 import staticData from "@config/config.json";
 // services
@@ -12,7 +13,7 @@ export default function Sale() {
   const [productList, setProductList] = useState([]);
 
   const [selectedpage, setSelectedpage] = useState(0);
-  const [dataPerPage, setDataPerPage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(5);
   const [search, setSearch] = useState("");
 
   // get-all-Product-Stock-API-start
@@ -47,44 +48,47 @@ export default function Sale() {
 
   return (
     <>
-      <div className="my-4">
-        <input
+      <div className="mt-4 d-flex justify-content-end">
+        <InputField
+          behave="normal"
+          size="md"
           type="text"
-          placeholder="Enter product name"
-          className="me-5"
+          placeholder="Search Product Name"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
+          styles={{ width: "260px" }}
         />
       </div>
 
       <Table theading={staticData.productSalesTableHeadings}>
         {productList?.allSales?.map((val, index) => (
           <tr key={index}>
-            <td className="border">{index + 1}</td>
-            <td className="border">{val?.name || ""}</td>
-            <td className="border">{val?.description || ""}</td>
-            <td className="border">
+            <td>{index + 1}</td>
+            <td>{val?.name || ""}</td>
+            <td>{val?.description || ""}</td>
+            <td>
               {val?.quantity.$numberDecimal || 0}{" "}
               {val?.productType === "liquid" ? "ltr" : ""}
             </td>
-            <td className="border">{val?.buyPrice || 0}</td>
-            <td className="border">{val?.salePrice || 0}</td>
-            <td className="border">{val?.discount || 0}</td>
-            <td className="border">{val?.profit || 0}</td>
-            <td className="border">
-              {val?.salePrice / val?.quantity.$numberDecimal || 0} (per)
-            </td>
-            <td className="border">{val?.updatedAt || ""}</td>
+            <td>{val?.buyPrice || 0}</td>
+            <td>{val?.salePrice || 0}</td>
+            <td>{val?.discount || 0}</td>
+            <td>{val?.profit || 0}</td>
+            <td>{val?.salePrice / val?.quantity.$numberDecimal || 0} (per)</td>
+            <td>{val?.updatedAt || ""}</td>
+            <td></td>
           </tr>
         ))}
       </Table>
-
-      <div className="mt-5">
+      <div className="mt-5 d-flex justify-content-between align-items-center">
+        <PageSelection
+          dataPerPage={(value) => setDataPerPage(value)}
+          value={dataPerPage}
+        />
         <Pagination
           pageCount={Number(productList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage} />
       </div>
     </>
   );

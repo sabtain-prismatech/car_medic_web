@@ -4,12 +4,16 @@ import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
 import CreateServiceModel from "@components/Model/CreateService";
+import InputField from "@components/SharedComponents/InputField";
+import Button from "@components/SharedComponents/Button";
 // config
 import staticData from "@config/config.json";
 // services
 import { serviceListApi } from "@services/service";
 // date-formatter
 import dateFormat from "dateformat";
+// Icons
+import Icons from "@helper/icons";
 
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
@@ -67,39 +71,48 @@ export default function Main() {
         ""
       )}
       <div className="mt-5">
-        <div className="mb-5">
-          <input
+        <div className=" d-flex justify-content-end">
+          <InputField
+            behave="normal"
+            size="md"
             type="text"
             placeholder="Search Services"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
+            styles={{ width: "260px" }}
           />
-          <button
+          <Button
             type="button"
-            className="ms-3"
+            size="md"
             onClick={() => setCreateModel(true)}
+            startIcon={<Icons.BsIcons.BsPlusCircleFill />}
+            align="ms-auto"
           >
             Add Service
-          </button>
+          </Button>
         </div>
         <Table theading={staticData.servicesTableHeadings}>
           {servicesList?.services?.map((val, index) => (
             <tr key={index}>
-              <td className="border">{index + 1}</td>
-              <td className="border">{val?.name || ""}</td>
-              <td className="border">{val?.price || 0}</td>
-              <td className="border">{val?.description || "N/A"}</td>
+              <td>{index + 1}</td>
+              <td>{val?.name || ""}</td>
+              <td>{val?.price || 0}</td>
+              <td>{val?.description || "N/A"}</td>
+              <td></td>
             </tr>
           ))}
         </Table>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 d-flex justify-content-between align-items-center">
+        <PageSelection
+          dataPerPage={(value) => setDataPerPage(value)}
+          value={dataPerPage}
+        />
         <Pagination
           pageCount={Number(servicesList?.pages)}
           selectedpage={(value) => setSelectedpage(value)}
         />
-        <PageSelection dataPerPage={(value) => setDataPerPage(value)} value={dataPerPage}  />
       </div>
     </>
   );

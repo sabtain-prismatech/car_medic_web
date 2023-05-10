@@ -34,6 +34,6 @@ export const sideNavData = [
   {
     title: "Logout",
     icon: <Icons.RiIcons.RiLogoutCircleLine />,
-    route: "/products",
+    route: "/",
   },
 ];

@@ -14,6 +14,7 @@ export default function Button({
   classes,
   title,
   disabled = false,
+  styles,
 }) {
   return (
     <>
@@ -25,6 +26,7 @@ export default function Button({
         onClick={onClick}
         title={title}
         disabled={disabled}
+        style={styles}
       >
         {startIcon && <i>{startIcon}</i>} {children}
       </button>
