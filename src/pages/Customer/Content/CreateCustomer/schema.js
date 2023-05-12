@@ -19,11 +19,11 @@ export const validationSchema = Yup.object().shape({
   phone: Yup.string().required("Required"),
   vehicleNo: Yup.string(),
   vehicleModel: Yup.string().when("vehicleNo", {
-    is: (val) => val !== "",
+    is: (val) => !!val,
     then: Yup.string().required("Vehicle model is required"),
   }),
   vehicleBrand: Yup.string().when("vehicleNo", {
-    is: (val) => val !== "",
+    is: (val) => !!val,
     then: Yup.string().required("Vehicle brand is required"),
   }),
 });

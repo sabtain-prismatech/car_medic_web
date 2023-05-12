@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // Components
 import Table from "@components/Table";
 import CreateVehicleModel from "@components/Model/CreateVehicle";
-import EditCustomerModel from "@components/Model/EditCustomer";
+import EditCustomerModel from "./EditCustomer/index";
 import Button from "@components/SharedComponents/Button";
 // config
 import staticData from "@config/config.json";
@@ -70,6 +70,8 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
           updateCustomerList={(value) => updateCustomerList(value)}
           show={editCustomerPop}
           onHide={() => setEditCustomerPop(false)}
+          title="Edit Customer"
+          size="md"
         />
       ) : (
         ""

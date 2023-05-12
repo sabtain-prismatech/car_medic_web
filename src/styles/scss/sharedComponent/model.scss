@@ -1,0 +1,12 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.modal-wrapper {
+  .close-icon {
+    @include fontstyle(18px, 500, $black-505);
+    cursor: pointer;
+  }
+}

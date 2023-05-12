@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // Components
-import CreateCustomerModel from "@components/Model/CreateCustomer";
+import CreateCustomerModel from "./CreateCustomer/index";
 import CustomerFilterModel from "@components/Model/CustomerFilter";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
@@ -71,6 +71,8 @@ export default function Content() {
             show={addModel}
             onHide={() => setAddModel(false)}
             updateCustomerList={(value) => setUpdateCustomerList(value)}
+            title="Create Customer"
+            size="lg"
           />
         ) : (
           ""
