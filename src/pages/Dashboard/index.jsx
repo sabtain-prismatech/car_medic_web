@@ -136,12 +136,12 @@ export default function Dashboard() {
           </div>
           {Object.keys(saleExpenseChart).length > 0 ? (
             <div className="row mt-4">
-              <div className="col-9">
+              <div className="col-12">
                 <div className="p-5 bg-white rounded-2">
                   <SalesLineChart chartValues={saleExpenseChart} />
                 </div>
               </div>
-              <div className="col-3 bg-white">
+              {/* <div className="col-3 bg-white">
                 <div className="bg-white rounded-2">
                   <Typography variant="body1" fw="bold" style="mb-4 p-5">
                     User Analytics
@@ -150,7 +150,7 @@ export default function Dashboard() {
                     <UserDoughnutChart />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           ) : (
             ""

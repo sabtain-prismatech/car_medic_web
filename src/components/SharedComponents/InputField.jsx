@@ -18,7 +18,12 @@ export default function InputField({
   size = "md",
   margin = "mb-4",
   value,
+  defaultValue,
   styles,
+  min,
+  max,
+  step,
+  readOnly,
 }) {
   const [showPassword, setShowPassword] = useState(false);
   return (
@@ -47,6 +52,10 @@ export default function InputField({
                     : formik.touched?.[name] && "success"
                 }`}
                 style={styles}
+                min={min}
+                max={max}
+                step={step}
+                readOnly={readOnly}
               />
             ) : (
               <input
@@ -57,6 +66,8 @@ export default function InputField({
                 value={value}
                 className={`input`}
                 style={styles}
+                defaultValue={defaultValue}
+                disabled={disabled}
               />
             )}
             {type === "password" ? (

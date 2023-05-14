@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
-import CreateServiceModel from "@components/Model/CreateService";
+import CreateServiceModel from "./CreateService/index";
 import InputField from "@components/SharedComponents/InputField";
 import Button from "@components/SharedComponents/Button";
 // config
@@ -66,6 +66,7 @@ export default function Main() {
           show={createModel}
           onHide={() => setCreateModel(false)}
           updateServiceList={(value) => setUpdateServiceList(value)}
+          title="Create Service"
         />
       ) : (
         ""

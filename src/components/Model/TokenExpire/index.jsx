@@ -1,8 +1,9 @@
 import React from "react";
 //Modal
 import Modal from "react-bootstrap/Modal";
-// Icons
-import Icons from "@helper/icons";
+// Typography
+import Typography from "@components/SharedComponents/Typography";
+import Button from "@components/SharedComponents/Button";
 // React-Router-Dom
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +14,7 @@ function TokenExpireModel(props) {
   const goToLogin = () => {
     onHide();
     localStorage.removeItem("TOKEN");
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -23,25 +24,30 @@ function TokenExpireModel(props) {
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        backdrop={false}
       >
-        <div className="delete-modal-wrapper p-5">
-          <div className="d-flex justify-content-center ">
-            <div className="bg-e50a1e width-50-px height-50 d-flex justify-content-center align-items-center br-50-px">
-              <i className="text-white f-24-px ">
-                <Icons.AiIcons.AiOutlineClose />
-              </i>
-            </div>
-          </div>
-          <h2 className="text-center mt-4 heading">
+        <div className=" p-5">
+          <Typography
+            variant="h3"
+            fw="bold"
+            style=" text-center"
+            color="txt_primary"
+          >
             Your Login Session is Expired!
-          </h2>
-          <h6 className="text-center mt-2 c-757575 f-13-px">
+          </Typography>
+          <Typography
+            variant="body1"
+            fw="semibold"
+            style="mb-4 text-center"
+            color="txt_primary"
+          >
             Please login again.
-          </h6>
-          <div className="text-center mt-5 pt-4" onClick={goToLogin}>
-            <button className="height-40 px-5 br-4-px darken-bg-030870-10 text-white f-14-px border-0 outline-0">
-              OK
-            </button>
+          </Typography>
+
+          <div className="text-center mt-5">
+            <Button type="button" align="mx-auto" onClick={goToLogin}>
+              Login
+            </Button>
           </div>
         </div>
       </Modal>

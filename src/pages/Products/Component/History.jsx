@@ -6,7 +6,7 @@ import PageSelection from "@components/PageSelection";
 import InputField from "@components/SharedComponents/InputField";
 import Button from "@components/SharedComponents/Button";
 // Model
-import ReturnProductModel from "@components/Model/ReturnProduct";
+import ReturnProductModel from "./ReturnProduct/index";
 // config
 import staticData from "@config/config.json";
 // services
@@ -80,6 +80,7 @@ export default function History() {
           onHide={() => setReturnModel(false)}
           product={selectedProduct}
           refreshList={(value) => setRefreshList(value)}
+          title={`Return Product`}
         />
       ) : (
         ""

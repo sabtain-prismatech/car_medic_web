@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Table from "@components/Table";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
-import CreateExpenseModel from "@components/Model/CreateExpense";
+import CreateExpenseModel from "./CreateExpense/index";
 import DateFilter from "@components/DateFilter";
 import InputField from "@components/SharedComponents/InputField";
 import Button from "@components/SharedComponents/Button";
@@ -73,6 +73,7 @@ export default function Main() {
           show={createModel}
           onHide={() => setCreateModel(false)}
           updateExpenseList={(value) => setUpdateExpenseList(value)}
+          title="Create Expense"
         />
       ) : (
         ""
@@ -110,7 +111,7 @@ export default function Main() {
               <td>{val?.title || ""}</td>
               <td>{val?.amount || ""}</td>
               <td>{val?.description || "N/A"}</td>
-              <td>{val?.createdAt}</td>
+              <td>{dateFormat(val?.createdAt, "dd-mmm-yyyy")}</td>
               <td></td>
             </tr>
           ))}

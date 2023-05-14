@@ -7,8 +7,8 @@ import InputField from "@components/SharedComponents/InputField";
 import Button from "@components/SharedComponents/Button";
 import Typography from "@components/SharedComponents/Typography";
 // Model
-import CreateProductModel from "@components/Model/CreateProduct";
-import CreateSalesModel from "@components/Model/CreateSale";
+import CreateProductModel from "./CreateProduct/index";
+import CreateSalesModel from "./CreateSale/index";
 // config
 import staticData from "@config/config.json";
 // services
@@ -79,6 +79,7 @@ export default function Stock({ stock }) {
           show={createModel}
           onHide={() => setCreateModel(false)}
           updateProductList={(value) => setUpdateProductList(value)}
+          title="Create Product"
         />
       ) : (
         ""
@@ -91,6 +92,8 @@ export default function Stock({ stock }) {
           onHide={() => setSaleModel(false)}
           updateProductList={(value) => setUpdateProductList(value)}
           product={selectedProduct}
+          title="Sale Product"
+          size="lg"
         />
       ) : (
         ""

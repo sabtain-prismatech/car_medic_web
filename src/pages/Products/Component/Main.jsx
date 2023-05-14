@@ -6,6 +6,8 @@ import Tab from "react-bootstrap/Tab";
 import Stock from "./Stock";
 import Sale from "./Sale";
 import History from "./History";
+// style
+import "@styles/scss/sharedComponent/tabs.scss";
 
 export default function Main() {
   const [tabsKey, setTabsKey] = useState("stock");

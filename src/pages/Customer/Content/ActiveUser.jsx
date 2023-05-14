@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // Components
 import Table from "@components/Table";
-import CreateVehicleModel from "@components/Model/CreateVehicle";
+import CreateVehicleModel from "./CreateVehicle/index";
 import EditCustomerModel from "./EditCustomer/index";
 import Button from "@components/SharedComponents/Button";
 // config
@@ -58,8 +58,10 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
       {addVehicleModel ? (
         <CreateVehicleModel
           customerInfo={selectedCustomer}
+          updateCustomerList={(value) => updateCustomerList(value)}
           show={addVehicleModel}
           onHide={() => setAddVehicleModel(false)}
+          title="Create Vehicle"
         />
       ) : (
         ""

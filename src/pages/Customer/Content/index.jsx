@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // Components
 import CreateCustomerModel from "./CreateCustomer/index";
-import CustomerFilterModel from "@components/Model/CustomerFilter";
+import CustomerFilterModel from "./CustomerFilter/index";
 import Pagination from "@components/Pagination";
 import PageSelection from "@components/PageSelection";
 import ActiveUser from "./ActiveUser";
@@ -82,6 +82,7 @@ export default function Content() {
             show={filterModel}
             onHide={() => setFilterModel(false)}
             filter={(value) => setFilter(value)}
+            title="Customer Filter"
           />
         ) : (
           ""

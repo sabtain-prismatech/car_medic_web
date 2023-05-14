@@ -36,3 +36,7 @@
   @include fontstyle(14px, 500, $black-505);
   width: 400px;
 }
+// md-label
+.md-label{
+  @include fontstyle(15px, 600, $black-505);
+}
