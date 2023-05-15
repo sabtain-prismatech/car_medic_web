@@ -1,16 +1,14 @@
 import React from "react";
 // Components
-import SideNav from "@components/SideNav";
+import DashboardLayout from "@components/DashboardLayout";
 import Main from "./Component/Main";
 
 export default function Order() {
   return (
     <>
-      <div className="p-5">
-        <h1>Order</h1>
-        <SideNav />
+      <DashboardLayout title="Customer Order">
         <Main />
-      </div>
+      </DashboardLayout>
     </>
   );
 }

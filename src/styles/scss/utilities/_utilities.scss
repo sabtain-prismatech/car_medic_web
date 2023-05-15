@@ -11,6 +11,9 @@
 .txt_primary {
   color: $black-505;
 }
+.bg_secondary_low {
+  background-color: $blue-eaf;
+}
 
 // Error-Msg
 .error-msg {
@@ -37,6 +40,6 @@
   width: 400px;
 }
 // md-label
-.md-label{
+.md-label {
   @include fontstyle(15px, 600, $black-505);
 }
