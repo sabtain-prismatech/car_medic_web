@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // components
 import Typography from "@components/SharedComponents/Typography";
 import InputField from "@components/SharedComponents/InputField";
@@ -16,12 +16,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { toastPromise } from "@helper/toastPromise";
 
 export default function Main() {
+  const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
+
+
+  useEffect(()=>{
+
+  },[])
+
   const onSubmit = () => {};
 
   return (
     <>
       <Typography variant="h2" color="txt_primary" fw="bold">
-        Add Customers <span class="primary">Order</span>
+        Add Customers <span className="primary">Order</span>
       </Typography>
       <div className="container-fluid mt-5">
         <Formik
@@ -37,14 +44,19 @@ export default function Main() {
                     behave="normal"
                     size="md"
                     type="text"
-                    defaultValue={"Ali"}
+                    defaultValue={customerInfo?.name}
                     label="Customer Name"
                     disabled={true}
                   />
                 </div>
                 <div className="col-6">
                   <Selectbox
-                    array={[]}
+                    array={customerInfo?.vehicles?.map((element) => {
+                      return {
+                        value: element?._id,
+                        name: `${element?.vehicleNo} (${element?.vehicleBrand})`,
+                      };
+                    })}
                     notSelected="Select Vehicle"
                     label="Vehicle #"
                     name="vehicleId"
@@ -60,7 +72,13 @@ export default function Main() {
               >
                 <i>Which services you purchase please select</i>
               </Typography>
-              <div className="bg_secondary_low px-5 py-4"></div>
+              <div className="bg_secondary_low px-5 py-4">
+                <div className="row">
+                  <div className="col-4">
+
+                  </div>
+                </div>
+              </div>
             </Form>
           )}
         </Formik>

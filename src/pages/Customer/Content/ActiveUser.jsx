@@ -9,7 +9,7 @@ import staticData from "@config/config.json";
 // helpers
 import Icons from "@helper/icons";
 // react-router-dom
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
 // date-format
@@ -20,6 +20,7 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
   const [editCustomerPop, setEditCustomerPop] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [statusLoader, setStatusLoader] = useState(false);
+  const navigate = useNavigate();
 
   const modelHandler = (value) => {
     setSelectedCustomer(value);
@@ -51,6 +52,12 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
       }
     });
     setStatusLoader(false);
+  };
+
+  // Go-to-create-order-page
+  const createOrderPage = (value) => {
+    localStorage.setItem("CUSTOMER_INFO", JSON.stringify(value));
+    navigate("/customer/order");
   };
 
   return (
@@ -90,11 +97,14 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
               ))}
             </td>
             <td>
-              <Link to="/customer/order" style={{ textDecoration: "none" }}>
-                <Button type="button" btn="secondary" size="sm">
-                  Create Order
-                </Button>
-              </Link>
+              <Button
+                type="button"
+                btn="secondary"
+                size="sm"
+                onClick={() => createOrderPage(val)}
+              >
+                Create Order
+              </Button>
             </td>
             <td>
               <div className="d-flex justify-content-center align-items-center">

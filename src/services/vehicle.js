@@ -31,3 +31,19 @@ export const vehicleListApi = async (data) => {
   }
 };
 // vehicle-list-end
+
+// get-vehicles-by-customer-id-start
+export const vehicleListByCustomerIdApi = async (data, id) => {
+  //endPoint
+  const endPoint = `/vehicle/specific-customer/${id}`;
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On list Vehicle API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// get-vehicles-by-customer-id-end

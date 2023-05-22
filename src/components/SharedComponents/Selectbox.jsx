@@ -33,8 +33,8 @@ export default function Selectbox({
           >
             {notSelected && <option value="">{notSelected}</option>}
             {array?.map((val, index) => (
-              <option value={val} key={index}>
-                {val}
+              <option value={val.value} key={index}>
+                {val.name}
               </option>
             ))}
           </Field>
