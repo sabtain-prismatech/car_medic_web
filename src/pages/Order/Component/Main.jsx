@@ -14,14 +14,34 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // helper
 import { toastPromise } from "@helper/toastPromise";
+// services
+import { serviceListApi } from "@services/service";
 
 export default function Main() {
+  const [servicesList, setServicesList] = useState([]);
+
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
 
+  // get-all-vehicle-API-start
+  const getServicesList = async () => {
+    const params = {
+      name: "",
+      pageNo: selectedpage,
+      perPage: Number(dataPerPage),
+    };
+    await serviceListApi(params).then((response) => {
+      if (response?.data?.success) {
+        setServicesList(response?.data?.data);
+      } else {
+        console.log(response?.data?.message);
+      }
+    });
+  };
+  // get-all-vehicle-API-end
 
-  useEffect(()=>{
-
-  },[])
+  useEffect(() => {
+    getServicesList();
+  }, []);
 
   const onSubmit = () => {};
 
@@ -74,9 +94,7 @@ export default function Main() {
               </Typography>
               <div className="bg_secondary_low px-5 py-4">
                 <div className="row">
-                  <div className="col-4">
-
-                  </div>
+                  <div className="col-4"></div>
                 </div>
               </div>
             </Form>
