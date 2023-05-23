@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import Typography from "@components/SharedComponents/Typography";
 import InputField from "@components/SharedComponents/InputField";
 import Selectbox from "@components/SharedComponents/Selectbox";
+import Checkbox from "@components/SharedComponents/Checkbox";
 import Radio from "@components/SharedComponents/Radio";
 import Button from "@components/SharedComponents/Button";
+// Icons
+import Icons from "@helper/icons";
 // formik
 import { Formik, Form, ErrorMessage } from "formik";
 // schema
@@ -15,21 +18,22 @@ import "react-toastify/dist/ReactToastify.css";
 // helper
 import { toastPromise } from "@helper/toastPromise";
 // services
-import { serviceListApi } from "@services/service";
+import { serviceListSimpleApi } from "@services/service";
 
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
+  const [otherServices, setOtherService] = useState([
+    {
+      name: "",
+      price: "",
+    },
+  ]);
 
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
 
   // get-all-vehicle-API-start
   const getServicesList = async () => {
-    const params = {
-      name: "",
-      pageNo: selectedpage,
-      perPage: Number(dataPerPage),
-    };
-    await serviceListApi(params).then((response) => {
+    await serviceListSimpleApi({}).then((response) => {
       if (response?.data?.success) {
         setServicesList(response?.data?.data);
       } else {
@@ -42,6 +46,9 @@ export default function Main() {
   useEffect(() => {
     getServicesList();
   }, []);
+
+  // Other-services-handler
+  const otherServicesFun = () => {};
 
   const onSubmit = () => {};
 
@@ -94,8 +101,110 @@ export default function Main() {
               </Typography>
               <div className="bg_secondary_low px-5 py-4">
                 <div className="row">
-                  <div className="col-4"></div>
+                  {servicesList?.map((value, index) => (
+                    <div className="col-4 mb-4" key={index}>
+                      <Checkbox
+                        label={value?.name}
+                        name="services"
+                        value={value?._id}
+                      />
+                    </div>
+                  ))}
                 </div>
+                <Typography
+                  variant="h3"
+                  color="txt_primary"
+                  fw="bold"
+                  style="my-3"
+                >
+                  Others
+                </Typography>
+                {/* Read-Others-services-start */}
+                {[{}]?.map((val, index) => (
+                  <div className="row" key={index}>
+                    <div className="col-5">
+                      <InputField
+                        behave="normal"
+                        size="md"
+                        type="text"
+                        defaultValue={val?.name || ""}
+                        placeholder="Enter Service Name"
+                      />
+                    </div>
+                    <div className="col-5">
+                      <InputField
+                        behave="normal"
+                        size="md"
+                        type="number"
+                        placeholder="Enter Service Price"
+                      />
+                    </div>
+                    <div className="col-2 d-flex justify-content-end">
+                      <Button
+                        type="button"
+                        size="md"
+                        title="ADD"
+                        align="ms-auto me-3"
+                      >
+                        <i className="text-white m-0">
+                          <Icons.FaIcons.FaPlus />
+                        </i>
+                      </Button>
+                      <Button
+                        type="button"
+                        size="md"
+                        title="ADD"
+                        classes="bg-danger"
+                      >
+                        <i className="text-white m-0">
+                          <Icons.AiIcons.AiFillDelete />
+                        </i>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                {/* Create-services-Start */}
+                <div className="row">
+                  <div className="col-5">
+                    <InputField
+                      behave="normal"
+                      size="md"
+                      type="text"
+                      placeholder="Enter Service Name"
+                    />
+                  </div>
+                  <div className="col-5">
+                    <InputField
+                      behave="normal"
+                      size="md"
+                      type="number"
+                      placeholder="Enter Service Price"
+                    />
+                  </div>
+                  <div className="col-2 d-flex justify-content-end">
+                    <Button
+                      type="button"
+                      size="md"
+                      title="ADD"
+                      align="ms-auto me-3"
+                    >
+                      <i className="text-white m-0">
+                        <Icons.FaIcons.FaPlus />
+                      </i>
+                    </Button>
+                    <Button
+                      type="button"
+                      size="md"
+                      title="ADD"
+                      classes="bg-danger"
+                    >
+                      <i className="text-white m-0">
+                        <Icons.AiIcons.AiFillDelete />
+                      </i>
+                    </Button>
+                  </div>
+                </div>
+                {/* Create-services-End */}
               </div>
             </Form>
           )}

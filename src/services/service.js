@@ -31,3 +31,19 @@ export const serviceListApi = async (data) => {
   }
 };
 // service-list-end
+
+// service-list-with-out-pagination-start
+export const serviceListSimpleApi = async (data) => {
+  //endPoint
+  const endPoint = "/service/list/simple";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On list service API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// service-list-with-out-pagination-end
