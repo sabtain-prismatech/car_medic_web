@@ -43,3 +43,7 @@
 .md-label {
   @include fontstyle(15px, 600, $black-505);
 }
+// cursor-not-allow
+.cursor-disable{
+  cursor: not-allowed;
+}

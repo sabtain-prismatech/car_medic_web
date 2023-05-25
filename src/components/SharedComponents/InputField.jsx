@@ -68,6 +68,7 @@ export default function InputField({
                 style={styles}
                 defaultValue={defaultValue}
                 disabled={disabled}
+                readOnly={readOnly}
               />
             )}
             {type === "password" ? (

@@ -22,12 +22,11 @@ import { serviceListSimpleApi } from "@services/service";
 
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
-  const [otherServices, setOtherService] = useState([
-    {
-      name: "",
-      price: "",
-    },
-  ]);
+  const [otherServices, setOtherService] = useState({
+    name: "",
+    price: "",
+  });
+  const [totalOtherServices, setTotalOtherServices] = useState([]);
 
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
 
@@ -42,13 +41,42 @@ export default function Main() {
     });
   };
   // get-all-vehicle-API-end
+  // Latest-other-services-start
+  const latestOtherServices = () => {
+    const localData = JSON.parse(localStorage.getItem("OTHER_SERVICES"));
+    setTotalOtherServices(localData);
+  };
+  // Latest-other-services-end
 
   useEffect(() => {
     getServicesList();
+    latestOtherServices();
   }, []);
 
   // Other-services-handler
-  const otherServicesFun = () => {};
+  const otherServicesHandler = (e) => {
+    const { value, name } = e.target;
+    console.log(value, name);
+    setOtherService({ ...otherServices, [name]: value });
+  };
+  // Other-Service-submit
+  const otherServiceSubmit = () => {
+    let serviceArray = [];
+    if (otherServices?.name !== "" && otherServices?.price !== "") {
+      const localData = JSON.parse(localStorage.getItem("OTHER_SERVICES"));
+      serviceArray = localData || [];
+      serviceArray.push({
+        name: otherServices?.name,
+        price: otherServices?.price,
+      });
+      localStorage.setItem("OTHER_SERVICES", JSON.stringify(serviceArray));
+      setOtherService({ name: "", price: "" });
+    }
+    latestOtherServices();
+    console.log(serviceArray);
+  };
+
+  console.log(otherServices);
 
   const onSubmit = () => {};
 
@@ -120,7 +148,7 @@ export default function Main() {
                   Others
                 </Typography>
                 {/* Read-Others-services-start */}
-                {[{}]?.map((val, index) => (
+                {totalOtherServices?.map((val, index) => (
                   <div className="row" key={index}>
                     <div className="col-5">
                       <InputField
@@ -128,6 +156,7 @@ export default function Main() {
                         size="md"
                         type="text"
                         defaultValue={val?.name || ""}
+                        readOnly={true}
                         placeholder="Enter Service Name"
                       />
                     </div>
@@ -135,7 +164,9 @@ export default function Main() {
                       <InputField
                         behave="normal"
                         size="md"
-                        type="number"
+                        type="text"
+                        defaultValue={val?.price || ""}
+                        readOnly={true}
                         placeholder="Enter Service Price"
                       />
                     </div>
@@ -145,6 +176,8 @@ export default function Main() {
                         size="md"
                         title="ADD"
                         align="ms-auto me-3"
+                        classes="cursor-disable"
+                        disabled={true}
                       >
                         <i className="text-white m-0">
                           <Icons.FaIcons.FaPlus />
@@ -170,6 +203,9 @@ export default function Main() {
                       behave="normal"
                       size="md"
                       type="text"
+                      name="name"
+                      value={otherServices?.name}
+                      onChange={otherServicesHandler}
                       placeholder="Enter Service Name"
                     />
                   </div>
@@ -178,6 +214,9 @@ export default function Main() {
                       behave="normal"
                       size="md"
                       type="number"
+                      name="price"
+                      value={otherServices?.price}
+                      onChange={otherServicesHandler}
                       placeholder="Enter Service Price"
                     />
                   </div>
@@ -187,6 +226,7 @@ export default function Main() {
                       size="md"
                       title="ADD"
                       align="ms-auto me-3"
+                      onClick={otherServiceSubmit}
                     >
                       <i className="text-white m-0">
                         <Icons.FaIcons.FaPlus />
