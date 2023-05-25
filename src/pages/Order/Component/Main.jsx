@@ -76,6 +76,20 @@ export default function Main() {
     console.log(serviceArray);
   };
 
+  // Remove other service
+  const removeOtherService = (index) => {
+    console.log(index);
+    let localData = JSON.parse(localStorage.getItem("OTHER_SERVICES"));
+    localData = localData?.filter((val, i) => {
+      if (i !== index) {
+        return val;
+      }
+    });
+    localStorage.setItem("OTHER_SERVICES", JSON.stringify(localData));
+    latestOtherServices();
+    console.log(localData);
+  };
+
   console.log(otherServices);
 
   const onSubmit = () => {};
@@ -186,8 +200,9 @@ export default function Main() {
                       <Button
                         type="button"
                         size="md"
-                        title="ADD"
+                        title="Delete"
                         classes="bg-danger"
+                        onClick={() => removeOtherService(index)}
                       >
                         <i className="text-white m-0">
                           <Icons.AiIcons.AiFillDelete />
@@ -235,8 +250,9 @@ export default function Main() {
                     <Button
                       type="button"
                       size="md"
-                      title="ADD"
-                      classes="bg-danger"
+                      title="Delete"
+                      classes="cursor-disable bg-danger"
+                      disabled={true}
                     >
                       <i className="text-white m-0">
                         <Icons.AiIcons.AiFillDelete />
