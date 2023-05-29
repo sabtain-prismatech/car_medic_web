@@ -47,3 +47,9 @@
 .cursor-disable{
   cursor: not-allowed;
 }
+
+
+.ant-select-show-search:where(.css-dev-only-do-not-override-w8mnev).ant-select:not(.ant-select-customize-input) .ant-select-selector{
+  border: none !important;
+  outline: none !important;
+}

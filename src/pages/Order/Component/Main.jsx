@@ -6,6 +6,7 @@ import Selectbox from "@components/SharedComponents/Selectbox";
 import Checkbox from "@components/SharedComponents/Checkbox";
 import Radio from "@components/SharedComponents/Radio";
 import Button from "@components/SharedComponents/Button";
+import AutoCompleteInput from "@components/SharedComponents/AutoComplete";
 // Icons
 import Icons from "@helper/icons";
 // formik
@@ -44,6 +45,7 @@ export default function Main() {
   // Latest-other-services-start
   const latestOtherServices = () => {
     const localData = JSON.parse(localStorage.getItem("OTHER_SERVICES"));
+    console.log("Updated Data", localData);
     setTotalOtherServices(localData);
   };
   // Latest-other-services-end
@@ -85,9 +87,9 @@ export default function Main() {
         return val;
       }
     });
+    console.log(localData);
     localStorage.setItem("OTHER_SERVICES", JSON.stringify(localData));
     latestOtherServices();
-    console.log(localData);
   };
 
   console.log(otherServices);
@@ -163,26 +165,29 @@ export default function Main() {
                 </Typography>
                 {/* Read-Others-services-start */}
                 {totalOtherServices?.map((val, index) => (
-                  <div className="row" key={index}>
+                  <div
+                    className="row d-flex align-items-center my-2"
+                    key={index}
+                  >
                     <div className="col-5">
-                      <InputField
-                        behave="normal"
-                        size="md"
-                        type="text"
-                        defaultValue={val?.name || ""}
-                        readOnly={true}
-                        placeholder="Enter Service Name"
-                      />
+                      <Typography
+                        variant="body2"
+                        color="txt_primary"
+                        style="border py-2 px-3 rounded"
+                        fw="semibold"
+                      >
+                        <i>{val?.name}</i>
+                      </Typography>
                     </div>
                     <div className="col-5">
-                      <InputField
-                        behave="normal"
-                        size="md"
-                        type="text"
-                        defaultValue={val?.price || ""}
-                        readOnly={true}
-                        placeholder="Enter Service Price"
-                      />
+                      <Typography
+                        variant="body2"
+                        color="txt_primary"
+                        style="border py-2 px-3 rounded"
+                        fw="semibold"
+                      >
+                        {val?.price}
+                      </Typography>
                     </div>
                     <div className="col-2 d-flex justify-content-end">
                       <Button
@@ -262,6 +267,53 @@ export default function Main() {
                 </div>
                 {/* Create-services-End */}
               </div>
+              {/* if-oil-change-service-is-selected-start */}
+              <div className="row mt-5">
+                <div className="col-4">
+                  <InputField
+                    label="Current Mileage"
+                    name="currentMileage"
+                    placeholder="Enter Current Mileage"
+                    formik={formik}
+                  />
+                </div>
+                <div className="col-4">
+                  <InputField
+                    label="Best KM spend"
+                    name="bestKM"
+                    placeholder="Enter Best KM"
+                    formik={formik}
+                  />
+                </div>
+                <div className="col-4">
+                  <InputField
+                    behave="normal"
+                    size="md"
+                    type="text"
+                    disabled={true}
+                    label="Mileage to need change the oil"
+                  />
+                </div>
+              </div>
+              {/* if-oil-change-service-is-selected-end */}
+              {/* sale-product-start */}
+              <div className="row mt-5">
+                <div className="col-10">
+                  <AutoCompleteInput />
+                </div>
+                <div className="col-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    title="Sale Product"
+                    align="mx-auto"
+                    classes="w-100 h-100 justify-content-center"
+                  >
+                    Sale Now
+                  </Button>
+                </div>
+              </div>
+              {/* sale-product-end */}
             </Form>
           )}
         </Formik>
