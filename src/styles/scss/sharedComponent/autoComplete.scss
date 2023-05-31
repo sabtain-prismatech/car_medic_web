@@ -1,0 +1,23 @@
+@import "../variables/variables";
+@import "../mixin/mixin";
+@import "../extend/extend";
+@import "../common/common";
+@import "../utilities/utilities";
+
+.auto-complete-wrapper {
+  .options-wrapper {
+    background-color: $white;
+    max-height: 300px;
+    overflow: auto;
+    .options {
+      @include fontstyle(13px, 600, $black-505);
+      border-bottom: 1px solid rgba(113, 113, 113, 0.25);
+      border-right: 1px solid rgba(113, 113, 113, 0.25);
+      border-left: 1px solid rgba(113, 113, 113, 0.25);
+      cursor: pointer;
+      &:hover {
+        background-color: $blue-eaf;
+      }
+    }
+  }
+}

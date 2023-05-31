@@ -96,6 +96,25 @@ export default function Main() {
 
   const onSubmit = () => {};
 
+  const dummyProduct = [
+    {
+      name: "Zic Oil",
+      price: 4312,
+    },
+    {
+      name: "Car Filter",
+      price: 321,
+    },
+    {
+      name: "Honda Sticker",
+      price: 100,
+    },
+    {
+      name: "Tier",
+      price: 5000,
+    },
+  ];
+
   return (
     <>
       <Typography variant="h2" color="txt_primary" fw="bold">
@@ -141,7 +160,7 @@ export default function Main() {
                 fw="bold"
                 style="my-3"
               >
-                <i>Which services you purchase please select</i>
+                <i>Select Services</i>
               </Typography>
               <div className="bg_secondary_low px-5 py-4">
                 <div className="row">
@@ -297,23 +316,84 @@ export default function Main() {
               </div>
               {/* if-oil-change-service-is-selected-end */}
               {/* sale-product-start */}
-              <div className="row mt-5">
-                <div className="col-10">
-                  <AutoCompleteInput />
+              <Typography
+                variant="h3"
+                color="txt_primary"
+                fw="bold"
+                style="my-3"
+              >
+                <i>Sale Products</i>
+              </Typography>
+              <div className="row">
+                <div className="col-4">
+                  <AutoCompleteInput
+                    behave="normal"
+                    size="md"
+                    type="text"
+                    name="productName"
+                    placeholder="Select Product"
+                    list={dummyProduct}
+                  />
+                </div>
+                <div className="col-3">
+                  <InputField
+                    behave="normal"
+                    size="md"
+                    type="number"
+                    name="productQuantity"
+                    placeholder="Enter Quantity"
+                  />
+                </div>
+                <div className="col-3">
+                  <InputField
+                    behave="normal"
+                    size="md"
+                    type="number"
+                    name="productDiscount"
+                    placeholder="Enter Discount"
+                  />
                 </div>
                 <div className="col-2">
                   <Button
                     type="button"
-                    size="sm"
+                    size="md"
                     title="Sale Product"
                     align="mx-auto"
-                    classes="w-100 h-100 justify-content-center"
+                    classes="w-100 justify-content-center"
                   >
                     Sale Now
                   </Button>
                 </div>
               </div>
               {/* sale-product-end */}
+              <div className="row mt-4">
+                <div className="col-6">
+                  <InputField
+                    label="Discount"
+                    name="discount"
+                    placeholder="Enter Discount"
+                    formik={formik}
+                  />
+                </div>
+                <div className="col-6">
+                  <InputField
+                    label="Grand Total"
+                    name="total"
+                    placeholder="Enter Total"
+                    formik={formik}
+                  />
+                </div>
+              </div>
+              <div className="mt-5">
+                <Button
+                  type="button"
+                  size="lg"
+                  title="Create Order"
+                  align="mx-auto"
+                >
+                  Create Order
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

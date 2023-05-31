@@ -10,6 +10,7 @@ export default function InputField({
   behave = "formik",
   type = "text",
   onChange,
+  onFocus,
   label,
   name,
   formik,
@@ -69,6 +70,7 @@ export default function InputField({
                 defaultValue={defaultValue}
                 disabled={disabled}
                 readOnly={readOnly}
+                onFocus={onFocus}
               />
             )}
             {type === "password" ? (

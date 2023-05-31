@@ -31,9 +31,4 @@ export const sideNavData = [
     icon: <Icons.GiIcons.GiCarWheel />,
     route: "/products",
   },
-  {
-    title: "Logout",
-    icon: <Icons.RiIcons.RiLogoutCircleLine />,
-    route: "/",
-  },
 ];
