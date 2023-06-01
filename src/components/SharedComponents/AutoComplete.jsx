@@ -5,25 +5,33 @@ import InputField from "@components/SharedComponents/InputField";
 import "@styles/scss/sharedComponent/autoComplete.scss";
 
 export default function AutoComplete(props) {
-  const { list } = props;
+  const { list, selectedProd } = props;
   const [search, setSearch] = useState("");
   const [isSearch, setIsSearch] = useState(false);
 
   // change-handler
   const changeHandler = (e) => {
+    const { value } = e.target;
     setIsSearch(true);
-    setSearch(e.target.value);
+    setSearch(value);
+    selectedProd({});
   };
 
   // select-option
-  const selectOption = (option) => {
+  const selectOption = (data) => {
     setIsSearch(false);
-    setSearch(option);
+    selectedProd(data);
+    setSearch(data?.name);
   };
 
   // handle-focus
   const handleFocus = () => {
     setIsSearch(true);
+  };
+
+  // handle-blur
+  const handleBlur = () => {
+    setIsSearch(false);
   };
 
   return (
@@ -35,6 +43,7 @@ export default function AutoComplete(props) {
           value={search}
           onChange={changeHandler}
           onFocus={handleFocus}
+          // onBlur={handleBlur}
         />
         <div className="options-wrapper">
           {list
@@ -50,10 +59,10 @@ export default function AutoComplete(props) {
               <p
                 key={index}
                 className="options pt-3 pb-3 px-3"
-                onClick={() => selectOption(data.name)}
+                onClick={() => selectOption(data)}
               >
-                <span className="fw-bold">{data?.name}</span> , ({data?.price}){" "}
-                <sup>{10}</sup>
+                <span className="fw-bold">{data?.name}</span> , (
+                {data?.salePrice}) <sup>{data?.quantity?.$numberDecimal}</sup>
               </p>
             ))}
         </div>

@@ -7,6 +7,9 @@ import Checkbox from "@components/SharedComponents/Checkbox";
 import Radio from "@components/SharedComponents/Radio";
 import Button from "@components/SharedComponents/Button";
 import AutoCompleteInput from "@components/SharedComponents/AutoComplete";
+import Table from "@components/Table";
+// config
+import staticData from "@config/config.json";
 // Icons
 import Icons from "@helper/icons";
 // formik
@@ -20,14 +23,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { toastPromise } from "@helper/toastPromise";
 // services
 import { serviceListSimpleApi } from "@services/service";
+import { getStockListApi } from "@services/products";
+import { createSaleProductApi } from "@services/products";
 
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [otherServices, setOtherService] = useState({
     name: "",
     price: "",
   });
   const [totalOtherServices, setTotalOtherServices] = useState([]);
+  const [saleProd, setSaleProd] = useState({
+    discount: 0,
+    quantity: "",
+  });
+  const [selectedProd, setSelectedProd] = useState({});
+  const [allSalesProdList, setAllSalesProdList] = useState([]);
 
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
 
@@ -42,6 +54,22 @@ export default function Main() {
     });
   };
   // get-all-vehicle-API-end
+  // get-all-Product-Stock-API-start
+  const getAllProductList = async () => {
+    const params = {
+      name: "",
+      pageNo: 1,
+      perPage: null,
+    };
+    await getStockListApi(params).then((response) => {
+      if (response?.data?.success) {
+        console.log(response);
+        const data = response?.data?.data?.allStock;
+        setProductList(data);
+      }
+    });
+  };
+  // get-all-Product-Stock-API-end
   // Latest-other-services-start
   const latestOtherServices = () => {
     const localData = JSON.parse(localStorage.getItem("OTHER_SERVICES"));
@@ -51,8 +79,10 @@ export default function Main() {
   // Latest-other-services-end
 
   useEffect(() => {
+    setAllSalesProdList(JSON.parse(localStorage.getItem("SOLD_PRODUCT")) || []);
     getServicesList();
     latestOtherServices();
+    getAllProductList();
   }, []);
 
   // Other-services-handler
@@ -92,31 +122,88 @@ export default function Main() {
     latestOtherServices();
   };
 
+  // Product-Sale-handler
+  const prodSaleHandler = (e) => {
+    const { value, name } = e.target;
+    setSaleProd({ ...saleProd, [name]: value });
+  };
+  // create-sale-api
+  const createSaleApi = async (params) => {
+    const localSaleData = JSON.parse(localStorage.getItem("SOLD_PRODUCT"));
+    await createSaleProductApi(params).then((response) => {
+      let finalData = response?.data?.data;
+      // Toast-code-start
+      toast.promise(toastPromise(response), {
+        pending: "Please wait...",
+        success: {
+          render({ data }) {
+            setTimeout(() => {
+              onHide();
+            }, 1500);
+            localStorage.setItem(
+              "SOLD_PRODUCT",
+              JSON.stringify(
+                localSaleData ? [...localSaleData, finalData] : [finalData]
+              )
+            );
+            getAllProductList();
+            return `${data}`;
+          },
+          autoClose: 1500,
+        },
+        error: {
+          render({ data }) {
+            return `${data} `;
+          },
+          autoClose: 3000,
+        },
+      });
+    });
+    setAllSalesProdList(JSON.parse(localStorage.getItem("SOLD_PRODUCT")) || []);
+  };
+  // Sale-product-Function
+  const saleProductFun = () => {
+    if (Object.keys(selectedProd).length > 0 && saleProd?.quantity) {
+      document.getElementById("productError").innerText = "";
+      if (
+        Number(saleProd.quantity) <=
+        Number(selectedProd?.quantity?.$numberDecimal)
+      ) {
+        let params = {
+          customerName: customerInfo?.name,
+          productId: selectedProd?._id,
+          name: selectedProd?.name,
+          description: selectedProd?.description,
+          quantity: saleProd?.quantity,
+          buyPrice: selectedProd?.price,
+          salePrice: selectedProd?.salePrice,
+          productType: selectedProd?.productType,
+          discount: saleProd?.discount,
+        };
+        createSaleApi(params);
+      } else {
+        document.getElementById("productError").innerText =
+          "Quantity must be under the available stock.";
+        setTimeout(() => {
+          document.getElementById("productError").innerText = "";
+        }, 3000);
+      }
+    } else {
+      document.getElementById("productError").innerText =
+        "Please Select Product and Quantity";
+      setTimeout(() => {
+        document.getElementById("productError").innerText = "";
+      }, 3000);
+    }
+  };
+
   console.log(otherServices);
 
   const onSubmit = () => {};
 
-  const dummyProduct = [
-    {
-      name: "Zic Oil",
-      price: 4312,
-    },
-    {
-      name: "Car Filter",
-      price: 321,
-    },
-    {
-      name: "Honda Sticker",
-      price: 100,
-    },
-    {
-      name: "Tier",
-      price: 5000,
-    },
-  ];
-
   return (
     <>
+      <ToastContainer position="top-center" toastClassName="carCare-toast" />
       <Typography variant="h2" color="txt_primary" fw="bold">
         Add Customers <span className="primary">Order</span>
       </Typography>
@@ -316,11 +403,12 @@ export default function Main() {
               </div>
               {/* if-oil-change-service-is-selected-end */}
               {/* sale-product-start */}
+              <hr className="my-5" />
               <Typography
                 variant="h3"
                 color="txt_primary"
                 fw="bold"
-                style="my-3"
+                style="mt-5 mb-3"
               >
                 <i>Sale Products</i>
               </Typography>
@@ -332,7 +420,8 @@ export default function Main() {
                     type="text"
                     name="productName"
                     placeholder="Select Product"
-                    list={dummyProduct}
+                    list={productList}
+                    selectedProd={(value) => setSelectedProd(value)}
                   />
                 </div>
                 <div className="col-3">
@@ -340,8 +429,12 @@ export default function Main() {
                     behave="normal"
                     size="md"
                     type="number"
-                    name="productQuantity"
                     placeholder="Enter Quantity"
+                    name="quantity"
+                    value={saleProd?.quantity}
+                    onChange={prodSaleHandler}
+                    min="0"
+                    step="any"
                   />
                 </div>
                 <div className="col-3">
@@ -349,8 +442,11 @@ export default function Main() {
                     behave="normal"
                     size="md"
                     type="number"
-                    name="productDiscount"
+                    name="discount"
+                    value={saleProd?.discount}
+                    onChange={prodSaleHandler}
                     placeholder="Enter Discount"
+                    min="0"
                   />
                 </div>
                 <div className="col-2">
@@ -360,12 +456,48 @@ export default function Main() {
                     title="Sale Product"
                     align="mx-auto"
                     classes="w-100 justify-content-center"
+                    onClick={saleProductFun}
                   >
                     Sale Now
                   </Button>
                 </div>
               </div>
+              <div id="productError" className="error-msg mb-3"></div>
+              {/* product-list */}
+              <Table theading={staticData.productOrderSaleTableHeadings}>
+                {allSalesProdList?.map((val, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{val?.name || ""}</td>
+                    <td>
+                      {val?.quantity.$numberDecimal || 0}{" "}
+                      {val?.productType === "liquid" ? "ltr" : ""}
+                    </td>
+                    <td>
+                      {`(${val?.quantity.$numberDecimal} x ${
+                        val?.salePrice
+                      }) , ${val?.salePrice * val?.quantity.$numberDecimal}`}
+                    </td>
+                    <td>{val?.discount || 0}</td>
+                    <td>
+                      {val?.salePrice * val?.quantity.$numberDecimal -
+                        val?.discount}
+                    </td>
+                    <td>
+                      <Button
+                        type="button"
+                        onClick={() => handleReturnedProduct(val)}
+                        btn="secondary"
+                        size="sm"
+                      >
+                        Return
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </Table>
               {/* sale-product-end */}
+              <hr className="my-5" />
               <div className="row mt-4">
                 <div className="col-6">
                   <InputField

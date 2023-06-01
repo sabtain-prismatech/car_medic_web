@@ -11,6 +11,7 @@ export default function InputField({
   type = "text",
   onChange,
   onFocus,
+  onBlur,
   label,
   name,
   formik,
@@ -71,6 +72,10 @@ export default function InputField({
                 disabled={disabled}
                 readOnly={readOnly}
                 onFocus={onFocus}
+                onBlur={onBlur}
+                min={min}
+                max={max}
+                step={step}
               />
             )}
             {type === "password" ? (
