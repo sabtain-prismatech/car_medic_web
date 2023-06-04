@@ -25,6 +25,8 @@ import { toastPromise } from "@helper/toastPromise";
 import { serviceListSimpleApi } from "@services/service";
 import { getStockListApi } from "@services/products";
 import { createSaleProductApi } from "@services/products";
+// Model
+import ReturnProductModel from "../../Products/Component/ReturnProduct/index";
 
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
@@ -36,10 +38,13 @@ export default function Main() {
   const [totalOtherServices, setTotalOtherServices] = useState([]);
   const [saleProd, setSaleProd] = useState({
     discount: 0,
-    quantity: "",
+    quantity: 0,
   });
   const [selectedProd, setSelectedProd] = useState({});
   const [allSalesProdList, setAllSalesProdList] = useState([]);
+  const [selectedReturnProduct, setSelectedReturnProduct] = useState({});
+  const [returnModel, setReturnModel] = useState(false);
+  const [refreshList, setRefreshList] = useState(false);
 
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
 
@@ -147,6 +152,9 @@ export default function Main() {
               )
             );
             getAllProductList();
+            setAllSalesProdList(
+              JSON.parse(localStorage.getItem("SOLD_PRODUCT")) || []
+            );
             return `${data}`;
           },
           autoClose: 1500,
@@ -159,11 +167,10 @@ export default function Main() {
         },
       });
     });
-    setAllSalesProdList(JSON.parse(localStorage.getItem("SOLD_PRODUCT")) || []);
   };
   // Sale-product-Function
   const saleProductFun = () => {
-    if (Object.keys(selectedProd).length > 0 && saleProd?.quantity) {
+    if (Object.keys(selectedProd).length > 0 && saleProd?.quantity > 0) {
       document.getElementById("productError").innerText = "";
       if (
         Number(saleProd.quantity) <=
@@ -197,13 +204,51 @@ export default function Main() {
     }
   };
 
+  // return-produc
+  useEffect(() => {
+    if (refreshList) {
+      setRefreshList(false);
+      let localProd = JSON.parse(localStorage.getItem("SOLD_PRODUCT"));
+      localProd = localProd?.filter((val) => {
+        if (val?._id !== selectedReturnProduct?._id) {
+          return val;
+        }
+      });
+      localStorage.setItem("SOLD_PRODUCT", JSON.stringify(localProd));
+      setAllSalesProdList(localProd);
+      getAllProductList();
+    }
+  }, [refreshList]);
+
+  // handle-return-product
+  const handleReturnedProduct = (product) => {
+    setSelectedReturnProduct(product);
+    setReturnModel(true);
+  };
+
   console.log(otherServices);
 
   const onSubmit = () => {};
 
   return (
     <>
-      <ToastContainer position="top-center" toastClassName="carCare-toast" />
+      {returnModel ? (
+        <ReturnProductModel
+          show={returnModel}
+          onHide={() => setReturnModel(false)}
+          product={selectedReturnProduct}
+          refreshList={(value) => setRefreshList(value)}
+          title={`Return Product`}
+        />
+      ) : (
+        ""
+      )}
+      {!returnModel ? (
+        <ToastContainer position="top-center" toastClassName="carCare-toast" />
+      ) : (
+        ""
+      )}
+
       <Typography variant="h2" color="txt_primary" fw="bold">
         Add Customers <span className="primary">Order</span>
       </Typography>
@@ -226,6 +271,7 @@ export default function Main() {
                     disabled={true}
                   />
                 </div>
+                {console.log(formik.values)}
                 <div className="col-6">
                   <Selectbox
                     array={customerInfo?.vehicles?.map((element) => {
@@ -254,7 +300,7 @@ export default function Main() {
                   {servicesList?.map((value, index) => (
                     <div className="col-4 mb-4" key={index}>
                       <Checkbox
-                        label={value?.name}
+                        label={`${value?.name} (${value?.price})`}
                         name="services"
                         value={value?._id}
                       />
@@ -489,6 +535,7 @@ export default function Main() {
                         onClick={() => handleReturnedProduct(val)}
                         btn="secondary"
                         size="sm"
+                        align="mx-auto"
                       >
                         Return
                       </Button>
@@ -518,7 +565,7 @@ export default function Main() {
               </div>
               <div className="mt-5">
                 <Button
-                  type="button"
+                  type="submit"
                   size="lg"
                   title="Create Order"
                   align="mx-auto"
