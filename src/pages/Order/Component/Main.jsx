@@ -31,6 +31,7 @@ import ReturnProductModel from "../../Products/Component/ReturnProduct/index";
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
   const [productList, setProductList] = useState([]);
+  const [totalBill, setTotalBill] = useState(0);
   const [otherServices, setOtherService] = useState({
     name: "",
     price: "",
@@ -45,6 +46,8 @@ export default function Main() {
   const [selectedReturnProduct, setSelectedReturnProduct] = useState({});
   const [returnModel, setReturnModel] = useState(false);
   const [refreshList, setRefreshList] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [disableField, setDisableField] = useState(false);
 
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
 
@@ -228,7 +231,46 @@ export default function Main() {
 
   console.log(otherServices);
 
-  const onSubmit = () => {};
+  const onSubmit = (values) => {
+    console.log(values);
+    let total = 0;
+
+    // Calculate-services-price
+    for (let i = 0; i < values?.servicesId?.length; i++) {
+      for (let j = 0; j < servicesList?.length; j++) {
+        if (values?.servicesId[i] === servicesList[j]._id) {
+          total += Number(servicesList[j]?.price);
+        }
+      }
+    }
+    // calculate-other-services
+    for (let i = 0; i < totalOtherServices?.length; i++) {
+      total += Number(totalOtherServices[i]?.price);
+    }
+    // calculate-product-price
+    for (let i = 0; i < allSalesProdList?.length; i++) {
+      const price =
+        Number(allSalesProdList[i]?.salePrice) -
+        Number(allSalesProdList[i]?.discount);
+      total += Number(price);
+    }
+
+    total = total - Number(values?.discount);
+
+    setTotalBill(total);
+    console.log(allSalesProdList);
+    console.log(total);
+    setIsEdit(true);
+    setDisableField(true);
+  };
+
+  // Handle-Edit-Order
+  const handleEditOrder = () => {
+    setDisableField(false);
+    setIsEdit(false);
+  };
+
+  console.log("isEdit", isEdit);
 
   return (
     <>
@@ -271,7 +313,7 @@ export default function Main() {
                     disabled={true}
                   />
                 </div>
-                {console.log(formik.values)}
+                {/* {console.log(formik)} */}
                 <div className="col-6">
                   <Selectbox
                     array={customerInfo?.vehicles?.map((element) => {
@@ -301,8 +343,9 @@ export default function Main() {
                     <div className="col-4 mb-4" key={index}>
                       <Checkbox
                         label={`${value?.name} (${value?.price})`}
-                        name="services"
+                        name="servicesId"
                         value={value?._id}
+                        disabled={disableField}
                       />
                     </div>
                   ))}
@@ -379,6 +422,7 @@ export default function Main() {
                       value={otherServices?.name}
                       onChange={otherServicesHandler}
                       placeholder="Enter Service Name"
+                      disabled={disableField}
                     />
                   </div>
                   <div className="col-5">
@@ -390,6 +434,7 @@ export default function Main() {
                       value={otherServices?.price}
                       onChange={otherServicesHandler}
                       placeholder="Enter Service Price"
+                      disabled={disableField}
                     />
                   </div>
                   <div className="col-2 d-flex justify-content-end">
@@ -427,6 +472,7 @@ export default function Main() {
                     name="currentMileage"
                     placeholder="Enter Current Mileage"
                     formik={formik}
+                    disabled={disableField}
                   />
                 </div>
                 <div className="col-4">
@@ -435,6 +481,7 @@ export default function Main() {
                     name="bestKM"
                     placeholder="Enter Best KM"
                     formik={formik}
+                    disabled={disableField}
                   />
                 </div>
                 <div className="col-4">
@@ -468,6 +515,7 @@ export default function Main() {
                     placeholder="Select Product"
                     list={productList}
                     selectedProd={(value) => setSelectedProd(value)}
+                    disabled={disableField}
                   />
                 </div>
                 <div className="col-3">
@@ -481,6 +529,7 @@ export default function Main() {
                     onChange={prodSaleHandler}
                     min="0"
                     step="any"
+                    disabled={disableField}
                   />
                 </div>
                 <div className="col-3">
@@ -493,6 +542,7 @@ export default function Main() {
                     onChange={prodSaleHandler}
                     placeholder="Enter Discount"
                     min="0"
+                    disabled={disableField}
                   />
                 </div>
                 <div className="col-2">
@@ -557,21 +607,47 @@ export default function Main() {
                 <div className="col-6">
                   <InputField
                     label="Grand Total"
-                    name="total"
-                    placeholder="Enter Total"
-                    formik={formik}
+                    behave="normal"
+                    size="md"
+                    type="text"
+                    value={totalBill}
+                    disabled={true}
                   />
                 </div>
               </div>
-              <div className="mt-5">
-                <Button
-                  type="submit"
-                  size="lg"
-                  title="Create Order"
-                  align="mx-auto"
-                >
-                  Create Order
-                </Button>
+              <div className="mt-5 d-flex">
+                {isEdit ? (
+                  <div>
+                    <Button
+                      type="button"
+                      size="lg"
+                      title="Edit Order"
+                      align="mx-auto"
+                      variant="outline"
+                      onClick={handleEditOrder}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      title="Create Order"
+                      align="mx-auto"
+                      variant="outline"
+                    >
+                      Create Order
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    type="submit"
+                    size="lg"
+                    title="Submit the Order"
+                    align="mx-auto"
+                  >
+                    Submit
+                  </Button>
+                )}
               </div>
             </Form>
           )}
