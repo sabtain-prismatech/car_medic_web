@@ -12,6 +12,11 @@ export const sideNavData = [
     route: "/customer",
   },
   {
+    title: "Reminders",
+    icon: <Icons.FaIcons.FaUsers />,
+    route: "/reminders",
+  },
+  {
     title: "Vehicle",
     icon: <Icons.FaIcons.FaTruck />,
     route: "/vehicle",

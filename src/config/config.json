@@ -74,5 +74,15 @@
     "Total",
     "Action"
   ],
-  "selectArray": ["option 1", "option 2", "option 3", "option 4"]
+  "selectArray": ["option 1", "option 2", "option 3", "option 4"],
+  "reminderTableHeadings": [
+    "#",
+    "Customer Name",
+    "Phone",
+    "Vehicle",
+    "Number of Reminds",
+    "Last Remind",
+    "Created At",
+    "Action"
+  ]
 }

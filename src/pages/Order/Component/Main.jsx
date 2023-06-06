@@ -4,7 +4,6 @@ import Typography from "@components/SharedComponents/Typography";
 import InputField from "@components/SharedComponents/InputField";
 import Selectbox from "@components/SharedComponents/Selectbox";
 import Checkbox from "@components/SharedComponents/Checkbox";
-import Radio from "@components/SharedComponents/Radio";
 import Button from "@components/SharedComponents/Button";
 import AutoCompleteInput from "@components/SharedComponents/AutoComplete";
 import Table from "@components/Table";
@@ -13,7 +12,7 @@ import staticData from "@config/config.json";
 // Icons
 import Icons from "@helper/icons";
 // formik
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 // schema
 import { initialValues, validationSchema } from "./schema";
 // React-Toastify-for-Notifications
@@ -25,8 +24,11 @@ import { toastPromise } from "@helper/toastPromise";
 import { serviceListSimpleApi } from "@services/service";
 import { getStockListApi } from "@services/products";
 import { createSaleProductApi } from "@services/products";
+import { createOrderApi } from "@services/order";
 // Model
 import ReturnProductModel from "../../Products/Component/ReturnProduct/index";
+// Navigate
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
   const [servicesList, setServicesList] = useState([]);
@@ -34,7 +36,7 @@ export default function Main() {
   const [totalBill, setTotalBill] = useState(0);
   const [otherServices, setOtherService] = useState({
     name: "",
-    price: "",
+    price: 0,
   });
   const [totalOtherServices, setTotalOtherServices] = useState([]);
   const [saleProd, setSaleProd] = useState({
@@ -50,6 +52,8 @@ export default function Main() {
   const [disableField, setDisableField] = useState(false);
 
   const customerInfo = JSON.parse(localStorage.getItem("CUSTOMER_INFO"));
+
+  const navigate = useNavigate();
 
   // get-all-vehicle-API-start
   const getServicesList = async () => {
@@ -145,9 +149,6 @@ export default function Main() {
         pending: "Please wait...",
         success: {
           render({ data }) {
-            setTimeout(() => {
-              onHide();
-            }, 1500);
             localStorage.setItem(
               "SOLD_PRODUCT",
               JSON.stringify(
@@ -243,23 +244,28 @@ export default function Main() {
         }
       }
     }
+
+    console.log("Services Total", total);
     // calculate-other-services
     for (let i = 0; i < totalOtherServices?.length; i++) {
       total += Number(totalOtherServices[i]?.price);
     }
+    console.log("OtherServices Total", total);
     // calculate-product-price
     for (let i = 0; i < allSalesProdList?.length; i++) {
       const price =
-        Number(allSalesProdList[i]?.salePrice) -
+        allSalesProdList[i]?.quantity.$numberDecimal *
+          Number(allSalesProdList[i]?.salePrice) -
         Number(allSalesProdList[i]?.discount);
       total += Number(price);
     }
+    console.log("All Product Total", total);
 
     total = total - Number(values?.discount);
 
+    console.log("After Discount Total", total);
+
     setTotalBill(total);
-    console.log(allSalesProdList);
-    console.log(total);
     setIsEdit(true);
     setDisableField(true);
   };
@@ -270,7 +276,49 @@ export default function Main() {
     setIsEdit(false);
   };
 
-  console.log("isEdit", isEdit);
+  // Handle-Create-Order-Function-Start
+  const createOrderFun = async (values) => {
+    const params = {
+      customerId: customerInfo?._id,
+      vehicleId: values?.vehicleId,
+      servicesId: values?.servicesId,
+      otherServices: totalOtherServices?.forEach((value) => {
+        return {
+          name: value?.name,
+          price: Number(value?.price),
+        };
+      }),
+      productId: allSalesProdList?.map((value) => value?._id),
+      currentMileage: values?.currentMileage,
+      bestKM: values?.bestKM,
+      discount: Number(values?.discount),
+      total: Number(totalBill),
+    };
+    console.log("params", params);
+
+    await createOrderApi(params).then((response) => {
+      // Toast-code-start
+      toast.promise(toastPromise(response), {
+        pending: "Please wait...",
+        success: {
+          render({ data }) {
+            setTimeout(() => {
+              navigate("/customer/details");
+            }, 1500);
+
+            return `${data}`;
+          },
+          autoClose: 1500,
+        },
+        error: {
+          render({ data }) {
+            return `${data} `;
+          },
+          autoClose: 3000,
+        },
+      });
+    });
+  };
 
   return (
     <>
@@ -489,6 +537,10 @@ export default function Main() {
                     behave="normal"
                     size="md"
                     type="text"
+                    value={
+                      Number(formik?.values?.currentMileage) +
+                      Number(formik?.values?.bestKM)
+                    }
                     disabled={true}
                     label="Mileage to need change the oil"
                   />
@@ -602,6 +654,7 @@ export default function Main() {
                     name="discount"
                     placeholder="Enter Discount"
                     formik={formik}
+                    disabled={disableField}
                   />
                 </div>
                 <div className="col-6">
@@ -617,12 +670,12 @@ export default function Main() {
               </div>
               <div className="mt-5 d-flex">
                 {isEdit ? (
-                  <div>
+                  <div className="d-flex justify-content-center">
                     <Button
                       type="button"
                       size="lg"
                       title="Edit Order"
-                      align="mx-auto"
+                      align="ms-auto"
                       variant="outline"
                       onClick={handleEditOrder}
                     >
@@ -632,8 +685,8 @@ export default function Main() {
                       type="submit"
                       size="lg"
                       title="Create Order"
-                      align="mx-auto"
-                      variant="outline"
+                      // align="me-auto"
+                      onClick={() => createOrderFun(formik.values)}
                     >
                       Create Order
                     </Button>
