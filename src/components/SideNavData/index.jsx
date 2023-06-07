@@ -13,7 +13,7 @@ export const sideNavData = [
   },
   {
     title: "Reminders",
-    icon: <Icons.FaIcons.FaUsers />,
+    icon: <Icons.FaIcons.FaBrain />,
     route: "/reminders",
   },
   {
