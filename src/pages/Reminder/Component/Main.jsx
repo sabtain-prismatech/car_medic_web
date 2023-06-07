@@ -57,6 +57,7 @@ export default function Main() {
           onHide={() => setRemindModel(false)}
           title="Reminder"
           selectedOrder={selectedOrder}
+          updateRemindList={(value) => setUpdateRemindList(value)}
         />
       ) : (
         ""

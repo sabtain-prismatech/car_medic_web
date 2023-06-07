@@ -282,7 +282,7 @@ export default function Main() {
       customerId: customerInfo?._id,
       vehicleId: values?.vehicleId,
       servicesId: values?.servicesId,
-      otherServices: totalOtherServices?.forEach((value) => {
+      otherServices: (totalOtherServices ?? [])?.map((value) => {
         return {
           name: value?.name,
           price: Number(value?.price),
@@ -303,7 +303,7 @@ export default function Main() {
         success: {
           render({ data }) {
             setTimeout(() => {
-              navigate("/customer/details");
+              navigate("/customer/order/detail");
             }, 1500);
 
             return `${data}`;

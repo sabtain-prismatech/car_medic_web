@@ -47,3 +47,19 @@ export const remindOrderListApi = async (data) => {
   }
 };
 // Remind-Order-list-end
+
+// Remind-customer-start
+export const remindedCustomerApi = async (data) => {
+  //endPoint
+  const endPoint = "/order/reminded";
+  try {
+    const response = await axios.post(endPoint, data);
+    return response;
+  } catch (error) {
+    console.log("ERROR On Remind the customer API:", error);
+    if (error.response) {
+      return error.response;
+    }
+  }
+};
+// Remind-customer-end
