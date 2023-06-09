@@ -16,6 +16,7 @@ const Login = lazy(() => import("@pages/Login"));
 const Register = lazy(() => import("@pages/Register"));
 const Dashboard = lazy(() => import("@pages/Dashboard"));
 const Customer = lazy(() => import("@pages/Customer"));
+const CustomerDetails = lazy(() => import("@pages/CustomerDetails"));
 const Vehicle = lazy(() => import("@pages/Vehicle"));
 const Expense = lazy(() => import("@pages/Expense"));
 const Products = lazy(() => import("@pages/Products"));
@@ -53,6 +54,10 @@ export default function routes() {
           <Route element={<PrivateLogin isAllowed={tokenStorage()} />}>
             <Route path={url} element={<Dashboard />} />
             <Route path={url + "customer"} element={<Customer />} />
+            <Route
+              path={url + "customer/details"}
+              element={<CustomerDetails />}
+            />
             <Route path={url + "vehicle"} element={<Vehicle />} />
             <Route path={url + "expense"} element={<Expense />} />
             <Route path={url + "products"} element={<Products />} />

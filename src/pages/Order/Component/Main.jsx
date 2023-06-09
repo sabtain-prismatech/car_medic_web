@@ -303,7 +303,7 @@ export default function Main() {
         success: {
           render({ data }) {
             setTimeout(() => {
-              navigate("/customer/order/detail");
+              navigate("/customer/details");
             }, 1500);
 
             return `${data}`;

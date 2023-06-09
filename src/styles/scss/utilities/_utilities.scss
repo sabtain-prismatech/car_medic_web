@@ -44,12 +44,19 @@
   @include fontstyle(15px, 600, $black-505);
 }
 // cursor-not-allow
-.cursor-disable{
+.cursor-disable {
   cursor: not-allowed;
 }
 
+.order-box {
+  box-shadow: 0px 4px 4px rgba(88, 88, 88, 0.15);
+  border: 1px solid $blue-93d;
+}
 
-.ant-select-show-search:where(.css-dev-only-do-not-override-w8mnev).ant-select:not(.ant-select-customize-input) .ant-select-selector{
+.ant-select-show-search:where(
+    .css-dev-only-do-not-override-w8mnev
+  ).ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
   border: none !important;
   outline: none !important;
 }

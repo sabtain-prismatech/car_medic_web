@@ -9,7 +9,7 @@ import staticData from "@config/config.json";
 // helpers
 import Icons from "@helper/icons";
 // react-router-dom
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 // services
 import { updateCustomerStatusApi } from "@services/customer";
 // date-format
@@ -58,6 +58,12 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
   const createOrderPage = (value) => {
     localStorage.setItem("CUSTOMER_INFO", JSON.stringify(value));
     navigate("/customer/order");
+  };
+
+  // Go-to-customer-details
+  const goToCustomerDetails = (value) => {
+    localStorage.setItem("CUSTOMER_INFO", JSON.stringify(value));
+    navigate("/customer/details");
   };
 
   return (
@@ -165,7 +171,11 @@ export default function ActiveUser({ customerList, updateCustomerList }) {
                 >
                   <Icons.FaIcons.FaEdit />
                 </i>
-                <i className="primary" title="Details">
+                <i
+                  className="primary cursor-pointer"
+                  title="Details"
+                  onClick={() => goToCustomerDetails(val)}
+                >
                   <Icons.BsIcons.BsFillEyeFill />
                 </i>
               </div>
