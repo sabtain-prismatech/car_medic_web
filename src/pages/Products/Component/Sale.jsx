@@ -8,6 +8,8 @@ import InputField from "@components/SharedComponents/InputField";
 import staticData from "@config/config.json";
 // services
 import { getSalesListApi } from "@services/products";
+// dateForamt
+import dateFormat from "dateformat";
 
 export default function Sale() {
   const [productList, setProductList] = useState([]);
@@ -75,7 +77,7 @@ export default function Sale() {
             <td>{val?.discount || 0}</td>
             <td>{val?.profit || 0}</td>
             <td>{val?.salePrice / val?.quantity.$numberDecimal || 0} (per)</td>
-            <td>{val?.updatedAt || ""}</td>
+            <td>{dateFormat(val?.updatedAt,'dd-mmm-yyyy') || ""}</td>
             <td></td>
           </tr>
         ))}

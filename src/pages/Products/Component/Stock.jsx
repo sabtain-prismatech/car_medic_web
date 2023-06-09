@@ -15,6 +15,8 @@ import staticData from "@config/config.json";
 import { getStockListApi } from "@services/products";
 // Icons
 import Icons from "@helper/icons";
+// dateForamt
+import dateFormat from "dateformat";
 
 export default function Stock({ stock }) {
   const [productList, setProductList] = useState([]);
@@ -157,7 +159,7 @@ export default function Stock({ stock }) {
                 Sale Now
               </Button>
             </td>
-            <td>{val?.createdAt || ""}</td>
+            <td>{dateFormat(val?.createdAt,'dd-mmm-yyyy') || ""}</td>
             <td></td>
           </tr>
         ))}
